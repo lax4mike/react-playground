@@ -1,0 +1,29 @@
+@import "./variables";
+
+
+.console {
+    
+    margin: 0.5rem;
+    margin-top: 0;
+
+    border: 1px solid $gray4;
+
+    display: flex;
+    flex-direction: column;
+
+
+    .console__title-bar {
+        flex: 0 0 auto;
+        border-bottom: 1px solid $gray4;
+        padding: 0.5rem 1rem;
+        background: white;    
+    }
+
+    .console__text {
+        flex: 1 1 auto;
+        padding: 1rem;
+        background: white;
+    }
+
+}
+

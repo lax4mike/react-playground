@@ -1,0 +1,41 @@
+@import "./variables";
+
+.code {
+
+    display: flex;
+    width: 100%;
+
+    .code__editor {
+        flex: 0 0 50%;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        padding: 0.5rem;
+    }
+
+    // remove padding left from all but the first
+    .code__editor + .code__editor {
+        padding-left: 0;
+    }
+
+    .code__title-bar {
+        border: 1px solid $gray4;
+        border-bottom: 0;
+        padding: 0.5rem 1rem;
+        background: white;
+    }
+
+    .code__code-mirror { 
+        flex: 1 1 auto;
+        position: relative; 
+        border: 1px solid $gray4;
+    } 
+
+
+    .code__editor--es6 {
+
+    }
+
+
+}
