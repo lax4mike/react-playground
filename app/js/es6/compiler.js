@@ -21,6 +21,9 @@ var es5CodeMirror = CodeMirror(es5, {
 // observe change stream on es6codemirror
 var es6Stream = Kefir.fromEvent(es6CodeMirror, "change")
 
+	// only do this if there is a 250ms gap
+	.debounce(250)
+
     // compile the es6 code to es5 with traceur
     .map(function(cm){
         try {

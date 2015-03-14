@@ -10,5 +10,14 @@
     "codemirror": "~5.0.0",
     "kefir": "~1.1.0",
     "traceur": "~0.0.87"
+  },
+  "overrides": {
+    "codemirror": {
+      "main": [
+        "lib/codemirror.js", 
+        "mode/javascript/javascript.js",
+        "lib/codemirror.css"
+      ]
+    }
   }
 }
