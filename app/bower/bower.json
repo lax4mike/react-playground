@@ -1,0 +1,14 @@
+{
+  "name": "es6-playground",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "codemirror": "~5.0.0",
+    "kefir": "~1.1.0",
+    "traceur": "~0.0.87"
+  }
+}

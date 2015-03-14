@@ -1,37 +1,66 @@
+/**
+ *  Usage:
+ *      Once per computer: 
+ *              npm install -g gulp
+ *
+ *      Once per project, in gulp folder: 
+ *              npm install
+ *
+**/
+
 // Include gulp and plugins
 var gulp           = require("gulp"),
     utils          = require("./tasks/utils"),
-    config         = utils.loadConfig(),
     notify         = require("gulp-notify"),
-    runSequence    = require('run-sequence');
+    runSequence    = require("run-sequence");
+
+var path = require("path");
+
+// initialize the config
+var config = utils.loadConfig();
 
 
-gulp.task("prod", function(){  
-
-    // load the prod config (cache in utils.js)
-    config = utils.setConfig("prod");
-
-    gulp.start("build");
-
-});
-
-
-
+// dev task
 gulp.task("dev", function(){
 
-    // load the dev config (cache in utils.js)
-    config = utils.setConfig("dev");
+    // set the dev config (cache in utils.js)
+    config = utils.setConfig({
+        root  : path.resolve("../app"),
+        dest  : path.resolve("../public"),
+        env   : "dev",
+        tasks : ["js", "css", "html", "bower"],
+        watch : true
+    });
 
-    // clean first, then build
+
+    // clean first, then build with this config
     utils.clean(function(){
-        gulp.start("build"); 
+        build(); 
     });    
 
 });
 
+// prod task
+gulp.task("prod", function(){  
+
+    // set the prod config (cache in utils.js)
+    config = utils.setConfig({
+        root  : path.resolve("../app"),
+        dest  : path.resolve("../build_prod"),
+        env   : "prod",
+        tasks : ["js", "css", "html", "bower"],
+        watch : false
+    });
+
+    // build with this config
+    build();
+
+});
+
+
 
 // load and start tasks
-gulp.task("build", function(){
+function build() {
     
     gulp.src('').pipe(notify("Building for '" + config.env + "' environment")); // gulp.src('') is a hack
 
@@ -39,17 +68,16 @@ gulp.task("build", function(){
 
     // browserSync needs special treatment because it needs to be started AFTER the 
     // build directory has been created and filled (for livereload to work)
-    if (config.browserSync) {
+    if (config.watch) {
         utils.loadTasks(["browserSync"]);
         runSequence(config.tasks, "browserSync");
     }
     else {
         gulp.start(config.tasks);
     }
-
-    
-});
+ 
+}
 
 // Default Task (run when you run 'gulp'). dev envirnoment
-gulp.task("default", ["dev"]);
+gulp.task("default", [config.local.defaultTask || "dev"]);
 

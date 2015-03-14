@@ -4,21 +4,33 @@ var gulp           = require("gulp"),
     rename         = require("gulp-rename");
 
 
+// dev/default settings
+var html = {
+    src   : config.root + "/index.html",
+    watch : config.root + "/index.html",
+    dest  : config.dest
+};
 
-/* html */
+// production settings
+if (config.env === "prod"){
+    // defaults
+}
+
+
+
+/* copy html files */
 gulp.task("html", function(next) {
 
-
-    return gulp.src(config.html.src)
+    return gulp.src(html.src)
             .pipe(utils.drano())
-            .pipe(gulp.dest(config.html.dest));
+            .pipe(gulp.dest(html.dest));
 
 });
 
 
 // watch html
 if (config.watch){
-    utils.logYellow("watching", "html:", config.html.watch);
-    gulp.watch(config.html.watch, ["html"]);
+    utils.logYellow("watching", "html:", html.watch);
+    gulp.watch(html.watch, ["html"]);
 }
 

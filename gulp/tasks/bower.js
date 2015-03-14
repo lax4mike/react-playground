@@ -5,8 +5,39 @@ var gulp           = require("gulp"),
     filter         = require("gulp-filter"),
     gulpif         = require("gulp-if"),
     uglify         = require("gulp-uglify"),
-    minifyCSS      = require('gulp-minify-css'),
-    mainBowerFiles = require("main-bower-files");
+    minifyCSS      = require("gulp-minify-css"),
+    mainBowerFiles = require("main-bower-files"),
+    sourcemaps     = require("gulp-sourcemaps");
+
+
+// dev/default settings
+var bower = {
+    root: config.root + "/bower/",
+
+    js: {
+        filename: "vendor.js",
+        dest: config.dest + "/js"
+    },
+    
+    css: {
+        filename: "vendor.css",
+        dest: config.dest + "/css",
+    },
+
+    // to skip, set value to false or omit entirely
+    // otherwise, pass options object (can be empty {})
+    uglify: false,
+
+    // to skip, set value to false or omit entirely
+    // otherwise, pass options object (can be empty {})
+    minifyCSS: false,
+};
+
+// production settings
+if (config.env === "prod"){
+    bower.uglify = {};
+    bower.minifyCSS = {};
+}
 
 
 
@@ -14,7 +45,7 @@ var gulp           = require("gulp"),
 // http://engineroom.teamwork.com/hassle-free-third-party-dependencies/
 gulp.task("bower", function(next){
 
-    if (!config.bower || !config.bower.root){
+    if (!bower || !bower.root){
         utils.logYellow("bower", "not configured");
         return;
     }
@@ -23,7 +54,7 @@ gulp.task("bower", function(next){
     // mainBowerFiles returns array of "main" files from bower.json
     var bowerfiles = mainBowerFiles({
         checkExistence: true,
-        paths: config.bower.root,
+        paths: bower.root,
         debugging: false
     });
 
@@ -38,17 +69,21 @@ gulp.task("bower", function(next){
     gulp.src(bowerfiles)
         .pipe(utils.drano())
         .pipe(filterByExtension("js"))
-        .pipe(concat(config.bower.jsFilename))
-        .pipe(gulpif((config.uglify), uglify(config.uglify)))
-        .pipe(gulp.dest(config.js.dest));
+
+        .pipe( sourcemaps.init( { loadMaps: true } ) )
+            .pipe(concat(bower.js.filename))
+        .pipe( sourcemaps.write( './', { includeContent: true } ) )
+        
+        .pipe(gulpif((bower.uglify), uglify(bower.uglify)))
+        .pipe(gulp.dest(bower.js.dest));
 
     // make css
     gulp.src(bowerfiles)
         .pipe(utils.drano())
         .pipe(filterByExtension("css"))
-        .pipe(concat(config.bower.cssFilename))
-        .pipe(gulpif((config.minifyCSS), minifyCSS(config.minifyCSS)))
-        .pipe(gulp.dest(config.css.dest));
+        .pipe(concat(bower.css.filename))
+        .pipe(gulpif((bower.minifyCSS), minifyCSS(bower.minifyCSS)))
+        .pipe(gulp.dest(bower.css.dest));
 
 
     next();
@@ -56,16 +91,16 @@ gulp.task("bower", function(next){
 });
 
 // watch bower.json to regenerate vendor libraries
-if (config.bower && config.bower.root && config.watch){
-    var bowerJson = config.bower.root + "bower.json";
+if (config.watch){
+    var bowerJson = bower.root + "bower.json";
     utils.logYellow("watching", "bower:", bowerJson);
     gulp.watch(bowerJson, ["bower"]);
 }
 
 
 
-var filterByExtension = function(extension){  
+function filterByExtension(extension){  
     return filter(function(file){
         return file.path.match(new RegExp("." + extension + "$"));
     });
-};
+}
