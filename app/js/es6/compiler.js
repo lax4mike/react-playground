@@ -1,4 +1,4 @@
-// handle es6 > es5 compilation
+// handle es6 -> es5 compilation
 
 // get traceur compiler (has the .compile() function)
 var Es6Compiler = new traceur.Compiler();
@@ -7,6 +7,7 @@ var Es6Compiler = new traceur.Compiler();
 var es6 = document.querySelector(".code__editor--es6 .code__code-mirror");
 var es6CodeMirror = CodeMirror(es6, {
     mode:  "javascript",
+    value: "var poo = (x) => x + 1;",
     lineNumbers: true
 });
 
@@ -39,3 +40,6 @@ var es6Stream = Kefir.fromEvent(es6CodeMirror, "change")
         es5CodeMirror.setValue(v);
     });
 
+
+// fire change event when the page loads
+es6CodeMirror.setValue(es6CodeMirror.getValue());
