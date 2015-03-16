@@ -6,23 +6,41 @@
     margin: 0.5rem;
     margin-top: 0;
 
-    border: 1px solid $gray4;
-
     display: flex;
     flex-direction: column;
 
-
     .console__title-bar {
         flex: 0 0 auto;
-        border-bottom: 1px solid $gray4;
         padding: 0.5rem 1rem;
         background: white;    
+        border: 1px solid $gray4;
+        border-bottom: 0;
     }
 
     .console__text {
         flex: 1 1 auto;
         padding: 1rem;
         background: white;
+        border: 1px solid $gray4;
+    }
+
+    .console__resize-handle {
+        height: 0.5rem;
+        cursor: ns-resize;
+        user-select: none;
+
+        &::before {
+            display: block;
+            position: relative;;
+            top: 25%;
+            content: "";
+            margin: auto;
+            border-top: 1px solid $gray4;
+            border-bottom: 1px solid $gray4;
+            box-sizing: border-box;
+            height: 50%;
+            width: 100px;
+        }
     }
 
 }
