@@ -29,7 +29,12 @@ var es6Stream = Kefir.fromEvent(es6CodeMirror, "change")
     // compile the es6 code to es5 with traceur
     .map(function(cm){
         try {
-            return Es6Compiler.compile(cm.getValue(), "es6-playground");
+            var compiled = Es6Compiler.compile(cm.getValue(), "es6-playground");
+
+            // cut out traceur code (first 3 lines and last 3 lines)
+            compiled = compiled.match(/[^\r\n]+/g).slice(3, -3).join("\n");
+
+            return compiled;
         } 
         catch(e){
             return e.toString();
