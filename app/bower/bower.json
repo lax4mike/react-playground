@@ -14,7 +14,7 @@
   "overrides": {
     "codemirror": {
       "main": [
-        "lib/codemirror.js", 
+        "lib/codemirror.js",
         "mode/javascript/javascript.js",
         "lib/codemirror.css"
       ]

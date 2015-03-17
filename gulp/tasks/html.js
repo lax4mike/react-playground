@@ -6,9 +6,15 @@ var gulp           = require("gulp"),
 
 // dev/default settings
 var html = {
-    src   : config.root + "/index.html",
-    watch : config.root + "/index.html",
-    dest  : config.dest
+    src: [
+        config.root + "/index.html",
+        config.root + "/result-iframe.html"
+    ],
+    watch: [
+        config.root + "/index.html",
+        config.root + "/result-iframe.html"
+    ],
+    dest: config.dest
 };
 
 // production settings

@@ -31,12 +31,15 @@ var bower = {
     // to skip, set value to false or omit entirely
     // otherwise, pass options object (can be empty {})
     minifyCSS: false,
+
+    sourcemaps: true
 };
 
 // production settings
 if (config.env === "prod"){
     bower.uglify = {};
     bower.minifyCSS = {};
+    bower.sourcemaps = false;
 }
 
 
@@ -66,14 +69,15 @@ gulp.task("bower", function(next){
     utils.logYellow("bower files", "\n\t" + bowerfiles.join("\n\t"));
 
     // make js
-    gulp.src(bowerfiles)
+    var bowerJs = gulp.src(bowerfiles)
         .pipe(utils.drano())
         .pipe(filterByExtension("js"))
 
-        .pipe( sourcemaps.init( { loadMaps: true } ) )
-            .pipe(concat(bower.js.filename))
-        .pipe( sourcemaps.write( './', { includeContent: true } ) )
-        
+            // include sourcemaps
+            .pipe(gulpif(config.sourcemaps,  sourcemaps.init( { loadMaps: true } ) ))
+                .pipe(concat(bower.js.filename))
+            .pipe(gulpif(config.sourcemaps, sourcemaps.write( './', { includeContent: true } ) ))
+
         .pipe(gulpif((bower.uglify), uglify(bower.uglify)))
         .pipe(gulp.dest(bower.js.dest));
 
