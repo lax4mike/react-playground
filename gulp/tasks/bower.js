@@ -37,7 +37,7 @@ var bower = {
 
 // production settings
 if (config.env === "prod"){
-    bower.uglify = {};
+    bower.uglify = false;
     bower.minifyCSS = {};
     bower.sourcemaps = false;
 }

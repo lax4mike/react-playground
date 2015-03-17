@@ -12,12 +12,7 @@
         flex-direction: column;
         box-sizing: border-box;
         padding: 0.5rem;
-        padding-bottom: 0; // that space is for the console resizer
-    }
-
-    // remove padding left from all but the first
-    .code__editor + .code__editor {
-        padding-left: 0;
+        padding-right: 0; // that space is for the console resizer
     }
 
     .code__title-bar {

@@ -17,24 +17,24 @@ var mouseMoveStream = Kefir.fromEvent(window, "mousemove")
     // only push to this stream if the mouse is down on the resize handle
     .filterBy(mouseIsDownStream)
 
-    // get y position from bottom (size of console)
+    // get x position as a percentage (size of console)
     .map(function(mouseEvent){
 
         // prevent user selecting while dragging
         mouseEvent.preventDefault();
 
-        // document height minus mouse position
-        return document.documentElement.clientHeight - mouseEvent.y;
+        var dw = document.documentElement.clientWidth;
+        var rw = resizer.offsetWidth;
+
+        // calculate percentage of width. (rw * 1.5) puts us in the middle of the resizer
+        return (dw - mouseEvent.x - (rw * 1.5)) / dw * 100;
     })
 
     // don't let it get too small or too big
-    .filter(function(v){
-        var distanceFromTop = document.documentElement.clientHeight - v;
-        return v > 100 && distanceFromTop > 200;
+    .filter(function(percent){
+        return percent > 10 && percent < 70;
+    })
+
+    .onValue(function(v){
+        document.querySelector(".console").style.flexBasis = v + "%";  
     });
-
-
-mouseMoveStream.onValue(function(v){
-    document.querySelector(".console").style.flexBasis = v + "px";  
-});
-

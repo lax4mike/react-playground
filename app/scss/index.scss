@@ -17,14 +17,21 @@ body {
 		flex: 0 0 auto;
 	}
 
+	main {
+		flex: 1 1 auto;
+	}
+}
+
+
+main {
+	display: flex;
+	flex-direction: row;
 
 	.code {
 		flex: 1 1 auto;
 	}
 
 	.console {
-		flex: 0 0 10rem;
+		flex: 0 0 33%;
 	} 
-
-
 }

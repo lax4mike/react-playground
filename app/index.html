@@ -18,36 +18,39 @@
 
         </script>
 
-    	<div class="code">
-    		<div class="code__editor code__editor--es6">
-                <div class="code__title-bar">  
-                    ES6
-                    <select class="code__examples">
-                        <option value=""> Examples </option>
-                        
-                        <% examples.forEach(function(ex){ %>
-                        <option value="<%= ex.filename %>"><%= ex.filename %></option>
-                        <% }); %>
-                        
-                    </select>
-                </div>
-                <div class="code__code-mirror"></div>
-    		</div>
-    		
-    		<div class="code__editor code__editor--es5">
-                <div class="code__title-bar"> ES5 </div>
-                <div class="code__code-mirror"></div>
-    		</div>
-    	</div>
+        <main>
 
-        <div class="console">
-            <div class="console__resize-handle"></div>
-            <div class="console__title-bar">Console</div>
-            <div class="console__text">
-                <iframe class="console__iframe" src="result-iframe.html"></iframe>
+            <div class="code">
+                <div class="code__editor code__editor--es6">
+                    <div class="code__title-bar">  
+                        ES6
+                        <select class="code__examples">
+                            <option value=""> Examples </option>
+                            
+                            <% examples.forEach(function(ex){ %>
+                            <option value="<%= ex.filename %>"><%= ex.filename %></option>
+                            <% }); %>
+                            
+                        </select>
+                    </div>
+                    <div class="code__code-mirror"></div>
+                </div>
+                
+                <div class="code__editor code__editor--es5">
+                    <div class="code__title-bar"> ES5 </div>
+                    <div class="code__code-mirror"></div>
+                </div>
             </div>
-        </div>
+
+            <div class="console">
+                <div class="console__resize-handle"></div>
+                <div class="console__title-bar">Console</div>
+                <div class="console__text">
+                    <iframe class="console__iframe" src="result-iframe.html"></iframe>
+                </div>
+            </div>
         
+        </main>
   
         <script type="text/javascript" src="js/vendor.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
