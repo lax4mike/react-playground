@@ -9,7 +9,6 @@ var Es6Compiler = new traceur.Compiler();
 var es6 = document.querySelector(".code__editor--es6 .code__code-mirror");
 var es6CodeMirror = CodeMirror(es6, {
     mode:  "javascript",
-    value: "var poo = (x) => x + 1; \nconsole.log(poo(2));",
     lineNumbers: true
 });
 
@@ -43,6 +42,37 @@ var es6Stream = Kefir.fromEvent(es6CodeMirror, "change")
 
         Console.updateConsole(es6CodeMirror.getValue());
     });
+
+
+
+// handle select change
+var select = document.querySelector(".code__examples");
+
+var exampleStream = Kefir.fromEvent(select, "change")
+
+    .map(function(event){
+        return event.target.value;
+    })
+
+    .onValue(function(filename){
+
+        // if there is no filename, clear the es6 code
+        if (!filename) {
+            es6CodeMirror.setValue("");
+            return;
+        }
+
+        // find the selected file
+        var file = window.es6Examples.find(function(ex){
+            return ex.filename == filename;
+        });
+
+        // set the es6 code to be the file contents
+        if (file){
+            es6CodeMirror.setValue(file.content);
+        }
+    });
+
 
 
 // fire change event when the page loads

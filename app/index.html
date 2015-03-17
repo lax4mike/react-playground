@@ -11,10 +11,26 @@
         <div class="header">
             ES6 Playground
         </div>
-    
+
+        <script type="text/javascript">
+
+        window.es6Examples = <%= JSON.stringify(examples) %>;
+
+        </script>
+
     	<div class="code">
     		<div class="code__editor code__editor--es6">
-                <div class="code__title-bar"> ES6 </div>
+                <div class="code__title-bar">  
+                    ES6
+                    <select class="code__examples">
+                        <option value=""> Examples </option>
+                        
+                        <% examples.forEach(function(ex){ %>
+                        <option value="<%= ex.filename %>"><%= ex.filename %></option>
+                        <% }); %>
+                        
+                    </select>
+                </div>
                 <div class="code__code-mirror"></div>
     		</div>
     		

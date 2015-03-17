@@ -1,0 +1,3 @@
+function pooooo() {
+	return "poo";
+}
