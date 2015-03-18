@@ -1,11 +1,15 @@
 
 var resizer = document.querySelector(".console__resize-handle");
 
+// Fixing bug where releasing in the iframe doesn't fire window mouseup
+var iframe = document.querySelector(".console__iframe").contentDocument;
+
 // stream of true/false of whether or not the user has their mouse
 // down on the resize handle
 var mouseIsDownStream = Kefir.merge([
         Kefir.fromEvent(resizer, "mousedown"),
-        Kefir.fromEvent(window, "mouseup")
+        Kefir.fromEvent(window, "mouseup"),
+        Kefir.fromEvent(iframe, "mouseup") 
     ])
     .map(function(mouseEvent){
         return mouseEvent.type === "mousedown";
