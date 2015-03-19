@@ -1,5 +1,6 @@
 
 var resizer = document.querySelector(".console__resize-handle");
+var body = $("body");
 
 // Fixing bug where releasing in the iframe doesn't fire window mouseup
 var iframe = document.querySelector(".console__iframe").contentDocument;
@@ -13,6 +14,10 @@ var mouseIsDownStream = Kefir.merge([
     ])
     .map(function(mouseEvent){
         return mouseEvent.type === "mousedown";
+    })
+    .onValue(function(v){
+        // remove css transitions to prevent conflict
+        body.toggleClass("is-resizing", v);
     });
 
 
@@ -42,3 +47,6 @@ var mouseMoveStream = Kefir.fromEvent(window, "mousemove")
     .onValue(function(v){
         document.querySelector(".console").style.flexBasis = v + "%";  
     });
+
+
+

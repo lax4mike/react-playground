@@ -31,8 +31,8 @@ var es6Stream = Kefir.fromEvent(es6CodeMirror, "change")
         try {
             var compiled = Es6Compiler.compile(cm.getValue(), "es6-playground");
 
-            // cut out traceur code (first 3 lines and last 3 lines)
-            compiled = compiled.match(/[^\r\n]+/g).slice(3, -3).join("\n");
+            // cut out traceur code (first 2 lines and last 3 lines)
+            // compiled = compiled.match(/[^\r\n]+/g).slice(2, -3).join("\n");
 
             return compiled;
         } 
@@ -51,7 +51,7 @@ var es6Stream = Kefir.fromEvent(es6CodeMirror, "change")
 
 
 // handle select change
-var select = document.querySelector(".code__examples");
+var select = document.querySelector(".examples");
 
 var exampleStream = Kefir.fromEvent(select, "change")
 

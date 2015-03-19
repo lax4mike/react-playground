@@ -6,14 +6,21 @@
     width: 100%;
 
     .code__editor {
-        flex: 0 0 50%;
+        flex: 1 0 50%;
         position: relative;
         display: flex;
         flex-direction: column;
         box-sizing: border-box;
-        padding: 0.5rem;
-        padding-right: 0; // that space is for the console resizer
     }
+
+    .code__editor + .code__editor {
+        padding-left: 0.5rem;
+    } 
+
+    .code__editor--es5.no-padding {
+        padding-left: 0rem;
+    }
+    
 
     .code__title-bar {
         border: 1px solid $gray4;
@@ -32,6 +39,5 @@
     .code__editor--es6 {
 
     }
-
 
 }

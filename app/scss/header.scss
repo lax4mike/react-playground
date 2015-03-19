@@ -7,3 +7,49 @@
     padding: 0.5rem 1rem;
     border: 1px solid $gray4;
 }
+
+.examples {
+    margin: 0 1rem;
+}
+
+.toggle-group {
+
+    display: inline-flex;
+    border: 1px solid $gray4;
+    border-radius: 5px;
+    overflow: hidden;
+    
+    label {
+
+        display: block;
+        
+        cursor: pointer;
+
+
+        & + label {
+            border-left: 1px solid $gray4;
+        }
+
+        input {
+            display: none;
+        }
+
+        input:not(:checked) + span {
+            color: $gray4;
+            background: $gray7;
+        }
+
+
+        span {
+            display: inline-block;;
+            padding: 0.25rem 0.5rem;
+            background: white;
+            color: $gray1;
+        }
+
+    }
+}
+
+
+
+

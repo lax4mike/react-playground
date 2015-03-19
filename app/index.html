@@ -10,6 +10,29 @@
 
         <div class="header">
             ES6 Playground
+            <select class="examples">
+                <option value=""> Examples </option>
+                
+                <% examples.forEach(function(ex){ %>
+                <option value="<%= ex.filename %>"><%= ex.filename %></option>
+                <% }); %>
+                
+            </select>
+
+            <div class="toggle-group">
+                <label class="toggle">
+                    <input type="checkbox" class="toggle--es6" checked data-hide=".code__editor--es6">
+                    <span>ES6</span>
+                    </label>
+                <label class="toggle">
+                    <input type="checkbox" class="toggle--es5" checked data-hide=".code__editor--es5">
+                    <span>ES5</span>
+                </label>
+                <label class="toggle">
+                    <input type="checkbox" class="toggle--console" checked data-hide=".console">
+                    <span>Console</span>
+                </label>
+            </div>
         </div>
 
         <script type="text/javascript">
@@ -21,28 +44,18 @@
         <main>
 
             <div class="code">
-                <div class="code__editor code__editor--es6">
-                    <div class="code__title-bar">  
-                        ES6
-                        <select class="code__examples">
-                            <option value=""> Examples </option>
-                            
-                            <% examples.forEach(function(ex){ %>
-                            <option value="<%= ex.filename %>"><%= ex.filename %></option>
-                            <% }); %>
-                            
-                        </select>
-                    </div>
+                <div class="code__editor code__editor--es6 toggle-pane">
+                    <div class="code__title-bar"> ES6 </div>
                     <div class="code__code-mirror"></div>
                 </div>
                 
-                <div class="code__editor code__editor--es5">
+                <div class="code__editor code__editor--es5 toggle-pane">
                     <div class="code__title-bar"> ES5 </div>
                     <div class="code__code-mirror"></div>
                 </div>
             </div>
 
-            <div class="console">
+            <div class="console toggle-pane">
                 <div class="console__resize-handle"></div>
                 <div class="console__title-bar">Console</div>
                 <div class="console__text">
