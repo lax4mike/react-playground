@@ -9,14 +9,16 @@ var Es6Compiler = new traceur.Compiler();
 var es6 = document.querySelector(".code__editor--es6 .code__code-mirror");
 var es6CodeMirror = CodeMirror(es6, {
     mode:  "javascript",
-    lineNumbers: true
+    lineNumbers: true,
+    lineWrapping: true
 });
 
 // es6 code mirror
 var es5 = document.querySelector(".code__editor--es5 .code__code-mirror");
 var es5CodeMirror = CodeMirror(es5, {
     mode:  "javascript",
-    lineNumbers: true
+    lineNumbers: true,
+    lineWrapping: true
 });
 
 
