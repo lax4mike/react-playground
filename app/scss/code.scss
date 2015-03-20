@@ -6,7 +6,7 @@
     width: 100%;
 
     .code__editor {
-        flex: 1 0 50%;
+        flex: 1 1 auto;
         position: relative;
         display: flex;
         flex-direction: column;
@@ -17,8 +17,13 @@
         padding-left: 0.5rem;
     } 
 
+    // don't allow code resizing when the es6 editor is hidden
     .code__editor--es5.no-padding {
         padding-left: 0rem;
+
+        .es5-resize-handle {
+            display: none;
+        }
     }
     
 
@@ -36,8 +41,29 @@
     } 
 
 
-    .code__editor--es6 {
+    .es5-resize-handle {
 
+        cursor: ew-resize;
+        user-select: none;
+
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 0.5rem;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &::before {
+            display: block;
+            content: "";
+            background: rgba(0, 0, 0, 0.3);
+            width: 50%;
+            height: 3rem;
+            border-radius: 0.2rem;
+        }
     }
 
 }

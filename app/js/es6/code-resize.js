@@ -1,5 +1,5 @@
 
-var resizer = document.querySelector(".console__resize-handle");
+var resizer = document.querySelector(".es5-resize-handle");
 var body = $("body");
 
 // Fixing bug where releasing in the iframe doesn't fire window mouseup
@@ -32,21 +32,23 @@ var mouseMoveStream = Kefir.fromEvent(window, "mousemove")
         // prevent user selecting while dragging
         mouseEvent.preventDefault();
 
-        var dw = document.documentElement.clientWidth;
+        var codeLeft = $(".code").offset().left;
+        var codeWidth = $(".code").outerWidth();
         var rw = resizer.offsetWidth;
 
-        // calculate percentage of width. rw puts us in the middle of the resizer
-        return (dw - mouseEvent.x - rw) / dw * 100;
+        // calculate percentage of es5 width.
+        return (100 - ((mouseEvent.x - (rw/2) - codeLeft) / codeWidth) * 100);
     })
 
     // don't let it get too small or too big
     .filter(function(percent){
-        return percent > 10 && percent < 70;
+        return percent > 20 && percent < 80;
     })
 
     .onValue(function(v){
-        document.querySelector(".console").style.flexBasis = v + "%";  
+        $(".code__editor--es5").css("flexBasis", v + "%");
+        $(".code__editor--es6").css("flexBasis", (100 - v) + "%");
     });
 
-
+mouseMoveStream.log();
 
