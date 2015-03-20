@@ -1,5 +1,5 @@
 html {
-	height: 100%;
+    height: 100%;
 }
 
 body {
@@ -12,43 +12,57 @@ body {
     margin: 0;
 
     font-family: verdana, sans-serif;
-	
-	.header {
-		flex: 0 0 auto;
-	}
+    
+    .header {
+        flex: 0 0 auto;
+    }
 
-	main {
-		flex: 1 1 auto;
-		padding: 0.5rem;
-	}
+    main {
+        flex: 1 1 auto;
+        padding: 0.5rem;
+    }
 }
 
 
 main {
-	display: flex;
-	flex-direction: row;
+    display: flex;
+    flex-direction: row;
 
-	.code {
-		flex: 1 1 auto;
-	}
+    .code {
+        flex: 0 0 66%;
+        .code__editor {
+            flex: 0 0 50%;
+        }
+    }
 
-	.console {
-		flex: 1 0 33%;
-	} 
+    .console {
+        flex: 0 0 34%;
+    } 
 }
 
-.toggle-pane {
+.toggle-pane,
+.code {
     transition: all 250ms;
     overflow: hidden;
+    opacity: 1;
 
-	// remove css transitions to prevent conflict with resizer dragging
+    // remove css transitions to prevent conflict with resizer dragging
     .is-resizing & {
         transition: none;
     }
+}
 
-    &.toggle--hidden {
-        flex: 0 0 0 !important;
-        padding: 0 !important;
-    }
+.hide-es5 .code__editor--es5,
+.hide-es6 .code__editor--es6,
+.hide-console .console {
+    flex: 0 0 0 !important;
+    padding: 0 !important; 
+    opacity: 0;
+}
+
+.hide-es5 .code__editor--es6,
+.hide-es6 .code__editor--es5,
+.hide-console .code {
+    flex: 0 0 100% !important;
 }
 

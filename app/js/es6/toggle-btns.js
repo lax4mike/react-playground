@@ -35,7 +35,6 @@ function updateToggle(toggle, checked){
 
     // update the toggle pane
     var hideSelector = toggle.attr("data-hide");
-    var hideElement = $(hideSelector)[0];
-    $(hideElement).toggleClass("toggle--hidden", !checked);
+    $("body").toggleClass("hide-" + hideSelector, !checked);
 }
 
