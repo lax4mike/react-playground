@@ -37,7 +37,14 @@ var bower = {
 
 // production settings
 if (config.env === "prod"){
-    bower.uglify = false;
+
+    // https://github.com/codemirror/CodeMirror/issues/2276
+    // http://blog.entelect.co.za/view/6435/minification-and-why-i-m-seeing-instead-of-whitespace
+    bower.uglify = {
+        output: { 
+            ascii_only: true 
+        }
+    };
     bower.minifyCSS = {};
     bower.sourcemaps = false;
 }
