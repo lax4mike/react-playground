@@ -33,8 +33,18 @@ var es6Stream = Kefir.fromEvent(es6CodeMirror, "change")
         try {
             var compiled = Es6Compiler.compile(cm.getValue(), "es6-playground");
 
-            // cut out traceur code (first 2 lines and last 3 lines)
-            // compiled = compiled.match(/[^\r\n]+/g).slice(2, -3).join("\n");
+            // insert lines to divide boilerplate traceur code from user code
+            compiled = compiled.match(/[^\r\n]+/g)
+                .map(function(line, i){
+                    if (line.match(/var __moduleName = ".*";/)){
+                        line += "\n";
+                    }
+                    if (line.match(/^\s\sreturn {};/)){
+                        line = "\n" + line;
+                    }
+                    return line;
+                })
+                .join("\n");
 
             return compiled;
         } 
