@@ -25,6 +25,7 @@ a.btn:active {
     min-height: $btn-height;
     line-height: $btn-height; // needed for <a>
     padding: 0.25rem 0.5rem;
+    vertical-align: middle;
     
     border-radius: 5px;
     border: 1px solid #666;

@@ -59,7 +59,10 @@ function getExamples() {
     examples = files.map(function(file){
         var filePath = examplesDir + '/' + file;
         var content = fs.readFileSync(filePath, "utf8");
-        var filename = file.replace(/\.[^/.]+$/, ""); // move extension
+
+        // remove extension and replace : with /
+        var filename = file.replace(/\.[^/.]+$/, "")
+                           .replace(/:/, "/"); 
 
         return {
             filename: filename,
