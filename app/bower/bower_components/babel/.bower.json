@@ -1,0 +1,7 @@
+{
+  "name": "babel",
+  "main": "index.js",
+  "_source": "/www/es6-playground/app/bower/babel-browser-4.7.16.js",
+  "_target": "*",
+  "_originalSource": "./babel-browser-4.7.16.js"
+}

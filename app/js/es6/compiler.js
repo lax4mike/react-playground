@@ -1,9 +1,6 @@
 // handle es6 -> es5 compilation
 
-var Console = require("./console-result");
-
-// get traceur compiler (has the .compile() function)
-var Es6Compiler = new traceur.Compiler();
+var Console = require("./console");
 
 
 // es6 code mirror
@@ -32,21 +29,7 @@ var es6Stream = Kefir.fromEvent(es6CodeMirror, "change")
     // compile the es6 code to es5 with traceur
     .map(function(){
         try {
-            var compiled = Es6Compiler.compile(es6CodeMirror.getValue(), "es6-playground");
-
-            // insert lines to divide boilerplate traceur code from user code
-            compiled = compiled.match(/[^\r\n]+/g)
-                .map(function(line, i){
-                    if (line.match(/var __moduleName = ".*";/)){
-                        line += "\n";
-                    }
-                    if (line.match(/^\s\sreturn {};/)){
-                        line = "\n" + line;
-                    }
-                    return line;
-                })
-                .join("\n");
-
+            var compiled = babel.transform(es6CodeMirror.getValue()).code;
             return compiled;
         } 
         catch(e){

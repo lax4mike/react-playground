@@ -1,3 +1,4 @@
+require("./es6/polyfill");
 
 // handle es6 > es5 compilation
 require("./es6/compiler");
