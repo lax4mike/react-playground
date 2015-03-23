@@ -5,8 +5,9 @@ var Console = require("./console-result");
 // get traceur compiler (has the .compile() function)
 var Es6Compiler = new traceur.Compiler();
 
+
 // es6 code mirror
-var es6 = document.querySelector(".code__editor--es6 .code__code-mirror");
+var es6 = document.querySelector(".editor--es6 .editor__code-mirror");
 var es6CodeMirror = CodeMirror(es6, {
     mode:  "javascript",
     lineNumbers: true,
@@ -14,7 +15,7 @@ var es6CodeMirror = CodeMirror(es6, {
 });
 
 // es6 code mirror
-var es5 = document.querySelector(".code__editor--es5 .code__code-mirror");
+var es5 = document.querySelector(".editor--es5 .editor__code-mirror");
 var es5CodeMirror = CodeMirror(es5, {
     mode:  "javascript",
     lineNumbers: true,
@@ -29,9 +30,9 @@ var es6Stream = Kefir.fromEvent(es6CodeMirror, "change")
     .debounce(250)
 
     // compile the es6 code to es5 with traceur
-    .map(function(cm){
+    .map(function(){
         try {
-            var compiled = Es6Compiler.compile(cm.getValue(), "es6-playground");
+            var compiled = Es6Compiler.compile(es6CodeMirror.getValue(), "es6-playground");
 
             // insert lines to divide boilerplate traceur code from user code
             compiled = compiled.match(/[^\r\n]+/g)
@@ -55,9 +56,10 @@ var es6Stream = Kefir.fromEvent(es6CodeMirror, "change")
 
     // when it changes, update the es5 code mirror
     .onValue(function(v){
-        es5CodeMirror.setValue(v);
 
+        es5CodeMirror.setValue(v);
         Console.updateConsole(es6CodeMirror.getValue());
+
     });
 
 

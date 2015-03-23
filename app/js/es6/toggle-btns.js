@@ -30,7 +30,7 @@ function updateToggle(toggle, checked){
     toggle.prop("checked", checked);
 
     // hide left padding on es5 if it's on the left now
-    $(".code__editor--es5").toggleClass("no-padding", !$(".toggle--es6").prop("checked"));
+    $(".editor--es5").toggleClass("no-padding", !$(".toggle--es6").prop("checked"));
 
 
     // update the toggle pane

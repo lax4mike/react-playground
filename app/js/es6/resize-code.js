@@ -46,8 +46,8 @@ var mouseMoveStream = Kefir.fromEvent(window, "mousemove")
     })
 
     .onValue(function(v){
-        $(".code__editor--es5").css("flexBasis", v + "%");
-        $(".code__editor--es6").css("flexBasis", (100 - v) + "%");
+        $(".editor--es5").css("flexBasis", v + "%");
+        $(".editor--es6").css("flexBasis", (100 - v) + "%");
     });
 
 

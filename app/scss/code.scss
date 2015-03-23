@@ -5,64 +5,81 @@
     display: flex;
     width: 100%;
 
-    .code__editor {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        box-sizing: border-box;
-    }
+}
 
-    .code__editor + .code__editor {
-        padding-left: 0.5rem;
-    } 
+.editor {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
 
-    // don't allow code resizing when the es6 editor is hidden
-    .code__editor--es5.no-padding {
-        padding-left: 0rem;
+.editor + .editor {
+    padding-left: 0.5rem;
+} 
 
-        .es5-resize-handle {
-            display: none;
-        }
-    }
-    
-
-    .code__title-bar {
-        border: 1px solid $gray4;
-        border-bottom: 0;
-        padding: 0.5rem 1rem;
-        background: white;
-    }
-
-    .code__code-mirror { 
-        flex: 1 1 auto;
-        position: relative; 
-        border: 1px solid $gray4;
-    } 
-
+// don't allow code resizing when the es6 editor is hidden
+.editor--es5.no-padding {
+    padding-left: 0rem;
 
     .es5-resize-handle {
+        display: none;
+    }
+}
 
-        cursor: ew-resize;
-        user-select: none;
 
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        width: 0.5rem;
+.editor__title-bar {
+    border: 1px solid $gray4;
+    border-bottom: 0;
+    padding: 0.5rem 1rem;
+    background: white;
+}
 
+.editor--es6 {
+    .editor__title-bar {
         display: flex;
-        justify-content: center;
-        align-items: center;
+        flex-direction: row;
 
-        &::before {
-            display: block;
-            content: "";
-            background: rgba(0, 0, 0, 0.3);
-            width: 50%;
-            height: 3rem;
-            border-radius: 0.2rem;
+        .editor__title-text {
+            flex: 1 1 auto;
+        }
+
+        .btn.run {
+            flex: 0 0 auto;
         }
     }
-
 }
+
+.editor__code-mirror { 
+    flex: 1 1 auto;
+    position: relative; 
+    border: 1px solid $gray4;
+} 
+
+
+.es5-resize-handle {
+
+    cursor: ew-resize;
+    user-select: none;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 0.5rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &::before {
+        display: block;
+        content: "";
+        background: rgba(0, 0, 0, 0.3);
+        width: 50%;
+        height: 3rem;
+        border-radius: 0.2rem;
+    }
+}
+
+

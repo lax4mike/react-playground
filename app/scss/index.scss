@@ -30,7 +30,7 @@ main {
 
     .code {
         flex: 0 0 66%;
-        .code__editor {
+        .editor {
             flex: 0 0 50%;
         }
     }
@@ -52,16 +52,16 @@ main {
     }
 }
 
-.hide-es5 .code__editor--es5,
-.hide-es6 .code__editor--es6,
+.hide-es5 .editor--es5,
+.hide-es6 .editor--es6,
 .hide-console .console {
     flex: 0 0 0 !important;
     padding: 0 !important; 
     opacity: 0;
 }
 
-.hide-es5 .code__editor--es6,
-.hide-es6 .code__editor--es5,
+.hide-es5 .editor--es6,
+.hide-es6 .editor--es5,
 .hide-console .code {
     flex: 0 0 100% !important;
 }
