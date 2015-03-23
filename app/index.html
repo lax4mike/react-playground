@@ -12,29 +12,27 @@
             ES6 Playground
             <select class="examples">
                 <option value=""> Examples </option>
-                
                 <% examples.forEach(function(ex){ %>
                 <option value="<%= ex.filename %>"><%= ex.filename %></option>
                 <% }); %>
-                
             </select>
 
             <div class="toggle-group">
-                <label class="toggle">
+                <label class="toggle" title="Toggle ES6 panel">
                     <input type="checkbox" class="toggle--es6" checked data-hide="es6">
                     <span>ES6</span>
                     </label>
-                <label class="toggle">
+                <label class="toggle" title="Toggle ES5 panel">
                     <input type="checkbox" class="toggle--es5" checked data-hide="es5">
                     <span>ES5</span>
                 </label>
-                <label class="toggle">
+                <label class="toggle" title="Toggle console panel">
                     <input type="checkbox" class="toggle--console" checked data-hide="console">
                     <span>Console</span>
                 </label>
             </div>
 
-            <button type="button" class="btn btn--rerun">
+            <button type="button" class="btn btn--rerun" title="Rerun code">
                 <svg>
                     <use xlink:href="img/svg-sprite.svg#refresh"></use>
                 </svg>

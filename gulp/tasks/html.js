@@ -12,7 +12,6 @@ var path = require("path"),
 var html = {
     watch: [
         config.root + "/index.html",
-        config.root + "/result-iframe.html",
         config.root + "/examples/**"
     ],
     dest: config.dest
@@ -37,11 +36,6 @@ gulp.task("html", function(next) {
             }))
             .pipe(gulp.dest(html.dest));
 
-
-    gulp.src(config.root + "/result-iframe.html")
-            .pipe(utils.drano())
-            .pipe(gulp.dest(html.dest));
-
     next();
 
 });
@@ -60,18 +54,19 @@ function getExamples() {
 
     var examplesDir = path.resolve(config.root + "/examples");
     var files = fs.readdirSync(examplesDir);
-    var examples = [];
-
+  
     // load file content of each file in examples
-    files.forEach(function(file){
+    examples = files.map(function(file){
         var filePath = examplesDir + '/' + file;
         var content = fs.readFileSync(filePath, "utf8");
+        var filename = file.replace(/\.[^/.]+$/, ""); // move extension
 
-        examples.push({
-            filename: file,
+        return {
+            filename: filename,
             content: content
-        });
+        };
     });
+
 
     return examples;
 

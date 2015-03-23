@@ -6,17 +6,17 @@ var Console = require("./console");
 // es6 code mirror
 var es6 = document.querySelector(".editor--es6 .editor__code-mirror");
 var es6CodeMirror = CodeMirror(es6, {
-    mode:  "javascript",
-    lineNumbers: true,
-    lineWrapping: true
+    mode         : "javascript",
+    lineNumbers  : true,
+    lineWrapping : true
 });
 
 // es6 code mirror
 var es5 = document.querySelector(".editor--es5 .editor__code-mirror");
 var es5CodeMirror = CodeMirror(es5, {
-    mode:  "javascript",
-    lineNumbers: true,
-    lineWrapping: true
+    mode         : "javascript",
+    lineNumbers  : true,
+    lineWrapping : true
 });
 
 

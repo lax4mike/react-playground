@@ -13,6 +13,10 @@
     font-size: 16px;
 }
 
+.btn--rerun {
+    margin: 0 1rem;
+}
+
 .toggle-group {
 
     display: inline-flex;
@@ -46,6 +50,10 @@
             padding: 0.25rem 0.5rem;
             background: white;
             color: $gray1;
+
+            &:hover {
+                background-color: #eee;
+            }
         }
 
     }

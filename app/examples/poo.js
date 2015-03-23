@@ -1,3 +1,0 @@
-function pooooo() {
-	return "poo";
-}
