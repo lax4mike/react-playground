@@ -1,0 +1,61 @@
+$btn-height: 29px;
+
+.btn,
+a.btn,
+a.btn:link,
+a.btn:visited,
+a.btn:hover,
+a.btn:active {
+
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    float: none;
+    font-size: 1rem;
+    font-weight: normal;
+    font-family: verdana, sans-serif;
+    appearance: none;
+    cursor: pointer;
+    white-space: nowrap;
+    box-sizing: border-box;
+    text-decoration: none;
+    text-align: center;
+
+    min-height: $btn-height;
+    line-height: $btn-height; // needed for <a>
+    padding: 0.25rem 0.5rem;
+    
+    border-radius: 5px;
+    border: 1px solid #666;
+    color: black;
+    
+    background-color: #fff;
+    background-color: rgba(#fff, 0.4);
+    opacity: 1;
+
+    transition: color 0.5s,   // for btn--loading
+                opacity 0.5s; // for [disabled]
+
+
+    &[disabled], 
+    &.disabled {
+        opacity: 0.25;
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=25)";
+        cursor: default;
+    }
+
+    &:hover {
+        background-color: #eee;
+    }
+
+    &:focus {
+        outline: 0;
+    }
+
+    svg {
+        height: $btn-height * (1/2);
+        width: $btn-height * (1/2);
+    }
+
+} // .btn

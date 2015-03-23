@@ -26,24 +26,45 @@ var es6Stream = Kefir.fromEvent(es6CodeMirror, "change")
     // only do this if there is a 250ms gap
     .debounce(250)
 
-    // compile the es6 code to es5 with traceur
-    .map(function(){
-        try {
-            var compiled = babel.transform(es6CodeMirror.getValue()).code;
-            return compiled;
-        } 
-        catch(e){
-            return e.toString();
-        }
-    })
+    // compile the es6 code to es5
+    .map(getCompiled)
 
-    // when it changes, update the es5 code mirror
-    .onValue(function(v){
+    // when it changes, update the es5 code mirror and console
+    .onValue(runCode);
 
-        es5CodeMirror.setValue(v);
-        Console.updateConsole(es6CodeMirror.getValue());
 
-    });
+// handle refreshing the console (useful for console statements over time)
+var refreshStream = Kefir.fromEvent($(".btn--rerun"), "click")
+
+    // first clear the console
+    .onValue(Console.clear)
+
+    // get the compiled code
+    .map(getCompiled)
+
+    // wait for 500ms
+    .delay(500)
+
+    // update es5 and console
+    .onValue(runCode);
+
+
+// snag the code from the es6 panel and get es5 code or error
+function getCompiled(){
+    try {
+        var compiled = babel.transform(es6CodeMirror.getValue()).code;
+        return compiled;
+    } 
+    catch(e){
+        return e.toString();
+    }
+}
+
+// take compiled code and update the es5 panel and console
+function runCode(compiledCode){
+    es5CodeMirror.setValue(compiledCode);
+    Console.updateConsole(es6CodeMirror.getValue());
+}
 
 
 
