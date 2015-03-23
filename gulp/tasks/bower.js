@@ -81,9 +81,9 @@ gulp.task("bower", function(next){
         .pipe(filterByExtension("js"))
 
             // include sourcemaps
-            .pipe(gulpif(config.sourcemaps,  sourcemaps.init( { loadMaps: true } ) ))
+            .pipe(gulpif(bower.sourcemaps,  sourcemaps.init() ))
                 .pipe(concat(bower.js.filename))
-            .pipe(gulpif(config.sourcemaps, sourcemaps.write( './', { includeContent: true } ) ))
+            .pipe(gulpif(bower.sourcemaps, sourcemaps.write() ))
 
         .pipe(gulpif((bower.uglify), uglify(bower.uglify)))
         .pipe(gulp.dest(bower.js.dest));
