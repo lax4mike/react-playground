@@ -17,7 +17,8 @@
       "main": [
         "lib/codemirror.js",
         "mode/javascript/javascript.js",
-        "lib/codemirror.css"
+        "lib/codemirror.css",
+        "theme/eclipse.css"    
       ]
     }
   }
