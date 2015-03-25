@@ -22,7 +22,6 @@ var es5CodeMirror = CodeMirror(es5, {
 // fixing bug with cursor when the codemirror size changes
 [es5CodeMirror, es6CodeMirror].forEach(function(cm){
     cm.on("focus", function(){
-        console.log("R");
         cm.refresh();
     });
 });
