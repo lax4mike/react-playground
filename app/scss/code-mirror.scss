@@ -11,6 +11,10 @@
 }
 
 .CodeMirror-code {
-	font-size: 16px;
+    font-size: 16px;
     font-family: "Source Code Pro", monospace;
+}
+
+.cm-s-eclipse span.cm-comment {
+    color: #7ea591; // lighten comments a little
 }
