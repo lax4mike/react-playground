@@ -1,6 +1,5 @@
 
-var resizer = document.querySelector(".console__resize-handle");
-var body = $("body");
+var resizer = $(".console__resize-handle");
 
 // stream of true/false of whether or not the user has their mouse
 // down on the resize handle
@@ -13,11 +12,12 @@ var mouseIsDownStream = Kefir.merge([
     })
     .onValue(function(v){
         // remove css transitions to prevent conflict
-        body.toggleClass("is-resizing", v);
+        $("body").toggleClass("is-resizing", v);
     });
 
 
-var mouseMoveStream = Kefir.fromEvent(window, "mousemove")
+
+var mouseMoveStream = Kefir.fromEvent($(document), "mousemove")
     
     // only push to this stream if the mouse is down on the resize handle
     .filterBy(mouseIsDownStream)
@@ -28,11 +28,13 @@ var mouseMoveStream = Kefir.fromEvent(window, "mousemove")
         // prevent user selecting while dragging
         mouseEvent.preventDefault();
 
-        var dw = document.documentElement.clientWidth;
-        var rw = resizer.offsetWidth;
+        var rw = resizer.width();
+        var mainWidth  = $("main").width();
+        var mainLeft   = $("main").offset().left + (($("main").outerWidth() - $("main").width())/2);
+        var mainMouseX = mouseEvent.pageX - mainLeft - (rw/2); // rw/2 puts us in the middle of the resizer
 
-        // calculate percentage of width. rw puts us in the middle of the resizer
-        return (dw - mouseEvent.x - rw) / dw * 100;
+        // calculate percentage of width. 
+        return 100 - ((mainMouseX/mainWidth) * 100);
     })
 
     // don't let it get too small or too big
@@ -44,6 +46,5 @@ var mouseMoveStream = Kefir.fromEvent(window, "mousemove")
         $(".console").css("flexBasis", v + "%");
         $(".code").css("flexBasis", (100 - v) + "%");
     });
-
 
 

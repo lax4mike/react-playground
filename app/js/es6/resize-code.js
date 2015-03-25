@@ -1,5 +1,5 @@
 
-var resizer = document.querySelector(".es5-resize-handle");
+var resizer = $(".es5-resize-handle");
 var body = $("body");
 
 // stream of true/false of whether or not the user has their mouse
@@ -28,12 +28,14 @@ var mouseMoveStream = Kefir.fromEvent(window, "mousemove")
         // prevent user selecting while dragging
         mouseEvent.preventDefault();
 
-        var codeLeft = $(".code").offset().left;
-        var codeWidth = $(".code").outerWidth();
-        var rw = resizer.offsetWidth;
+        var rw = resizer.width();
+        var codeWidth  = $(".code").width();
+        var codeLeft   = $(".code").offset().left + (($(".code").outerWidth() - $(".code").width())/2);
+        var codeMouseX = mouseEvent.pageX - codeLeft - (rw/2); // rw/2 puts us in the middle of the resizer
 
         // calculate percentage of es5 width.
-        return (100 - ((mouseEvent.x - (rw/2) - codeLeft) / codeWidth) * 100);
+        return 100 - ((codeMouseX/codeWidth) * 100);
+
     })
 
     // don't let it get too small or too big
