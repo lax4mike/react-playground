@@ -21,7 +21,7 @@
             <select class="examples">
                 <option value=""> Examples </option>
                 <% examples.forEach(function(ex){ %>
-                <option value="<%= ex.filename %>"><%= ex.filename %></option>
+                <option value="<%= ex.slug %>"><%= ex.displayName %></option>
                 <% }); %>
             </select>
 

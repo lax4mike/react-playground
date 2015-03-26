@@ -79,7 +79,7 @@ function runCode(compiledCode){
 
 
 // handle select change
-var select = document.querySelector(".examples");
+var select = $(".examples");
 
 var exampleStream = Kefir.fromEvent(select, "change")
 
@@ -87,28 +87,37 @@ var exampleStream = Kefir.fromEvent(select, "change")
         return event.target.value;
     })
 
-    .onValue(function(filename){
+    .onValue(function(slug){
 
-        // if there is no filename, clear the es6 code
-        if (!filename) {
+        // if there is no slug, clear the es6 code
+        if (!slug) {
             es6CodeMirror.setValue("");
+            window.location.hash = "";
             return;
         }
 
         // find the selected file
         var file = window.es6Examples.find(function(ex){
-            return ex.filename == filename;
+            return ex.slug == slug;
         });
 
         // set the es6 code to be the file contents
         if (file){
             es6CodeMirror.setValue(file.content);
+    
+            // set the hash
+            window.location.hash = "#" + slug;
         }
+
     });
 
 
+// if there is a hash present, load the example
+var hash = window.location.hash.replace(/^#/, '');
 
-// fire change event when the page loads
-es6CodeMirror.setValue(es6CodeMirror.getValue());
-
+if (hash){
+    select.val(hash);
+    select.change();
+}
+    
 

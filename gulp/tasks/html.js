@@ -61,11 +61,19 @@ function getExamples() {
         var content = fs.readFileSync(filePath, "utf8");
 
         // remove extension and replace : with /
-        var filename = file.replace(/\.[^/.]+$/, "")
-                           .replace(/:/, "/"); 
+        var displayName = file.replace(/\.[^/.]+$/, "")
+                              .replace(/:/, "/"); 
+
+        // remove spaces, / and replace with -, lowercase
+        var slug =  displayName.replace(/[\s\/]/g, "-")
+                               .toLowerCase();
+
+        // make sure we can put this in the URL
+        slug = encodeURIComponent(slug);
 
         return {
-            filename: filename,
+            displayName: displayName,
+            slug: slug,
             content: content
         };
     });
