@@ -16,6 +16,30 @@ var mouseIsDownStream = Kefir.merge([
     });
 
 
+// listen for double click
+var clickStream = Kefir.fromEvent(resizer, "mousedown");
+
+var doubleClickStream = clickStream
+    
+    // collect all clicks for 400 ms
+    .bufferBy(clickStream.delay(400))
+
+    // convert that into a number of clicks in that time
+    .map(function(events){
+        return events.length;
+    })
+
+    // filter by double or more clicks
+    .filter(function(clicks){
+        return clicks >= 2;
+    })
+    
+    // on double click, reset console panel to 25% (should match initial css)
+    .onValue(function(v){
+        $(".console").css("flexBasis", "25%");
+        $(".code").css("flexBasis", "75%");
+    });
+
 
 var mouseMoveStream = Kefir.fromEvent($(document), "mousemove")
     
