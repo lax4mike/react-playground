@@ -4,15 +4,14 @@
 // override console.log so it shows up in the console UI
 window.console.log = (function() {
     var log = console.log;
+
     return function() {
+        
+        // forward the call on to the real console.log
         log.apply(window.console, arguments);
 
-        // if an arg is an object, print out the JSON instead of [object Object]
-        var args = (Array.prototype.slice.call(arguments));
-        var argString = args.map(function(arg){
-            return (typeof arg  === "object") ? JSON.stringify(arg, null, 1) : arg.toString(); 
-        }).join(" ");
-
+        // write to our on screen console
+        var argString = getArgString(Array.prototype.slice.call(arguments));
         $(".console__text").append("<div  class='console__log'>" + argString + 
             "</div>");
     };
@@ -20,19 +19,32 @@ window.console.log = (function() {
 
 window.console.error = (function() {
     var err = console.error;
+
     return function() {
+
+        // forward the call on to the real console.err
         err.apply(window.console, arguments);
 
-        // if an arg is an object, print out the JSON instead of [object Object]
-        var args = (Array.prototype.slice.call(arguments));
-        var argString = args.map(function(arg){
-            return (typeof arg  === "object") ? JSON.stringify(arg, null, 1) : arg.toString(); 
-        }).join(" ");
-
+        // write to our on screen console
+        var argString = getArgString(Array.prototype.slice.call(arguments));
         $(".console__text").append("<div class='console__error'>" + argString + 
             "</div>");
     };
 }());
+
+// format the arguments for console logging
+function getArgString(args) {
+
+    try {
+        // if an arg is an object, print out the JSON instead of [object Object]
+        return args.map(function(arg){
+            return (typeof arg  === "object") ? JSON.stringify(arg, null, 1) : arg.toString(); 
+        }).join(" ");
+    }
+    catch(e){
+        return args.toString();
+    }
+}
 
 
 module.exports = {
@@ -48,7 +60,6 @@ module.exports = {
         }
         catch(e){
             console.error(e.stack);
-
         }
     }
 };
