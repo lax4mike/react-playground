@@ -17,22 +17,20 @@ var mouseIsDownStream = Kefir.merge([
     });
 
 
-// listen for double click
-var clickStream = Kefir.fromEvent(resizer, "mousedown");
+// // listen for double click
+var doubleClickStream = Kefir.fromEvent(resizer, "click")
 
-var doubleClickStream = clickStream
+    // get the last two clicks
+    .slidingWindow(2, 2)
 
-    // collect all clicks for 400 ms
-    .bufferBy(clickStream.delay(400))
-
-    // convert that into a number of clicks in that time
+    // convert this click and the last click into a duration
     .map(function(events){
-        return events.length;
+        return events[1].timeStamp - events[0].timeStamp;
     })
 
-    // filter by double or more clicks
-    .filter(function(clicks){
-        return clicks >= 2;
+    // only keep if the last two clicks were < 250ms
+    .filter(function(time){
+        return time < 250;
     })
 
     // on double click, reset code panels to 50% (should match initial css)
