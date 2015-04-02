@@ -38,7 +38,12 @@ function getArgString(args) {
     try {
         // if an arg is an object, print out the JSON instead of [object Object]
         return args.map(function(arg){
-            return (typeof arg  === "object") ? JSON.stringify(arg, null, 1) : arg.toString(); 
+            
+            if (typeof arg === "null")      { return "null"; }
+            if (typeof arg === "undefined") { return "undefined"; }
+            if (typeof arg === "object")    { return JSON.stringify(arg, null, 1) }
+
+            return arg.toString(); 
         }).join(" ");
     }
     catch(e){
