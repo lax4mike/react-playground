@@ -79,13 +79,13 @@ gulp.task("bower", function(next){
     var bowerJs = gulp.src(bowerfiles)
         .pipe(utils.drano())
         .pipe(filterByExtension("js"))
-
-            // include sourcemaps
-            .pipe(gulpif(bower.sourcemaps,  sourcemaps.init() ))
-                .pipe(concat(bower.js.filename))
-            .pipe(gulpif(bower.sourcemaps, sourcemaps.write() ))
-
+        .pipe(gulpif(bower.sourcemaps,  sourcemaps.init() )) // init sourcemaps
+        
+        // putting a ; between each file to avoid problems when a library doesn't end in ;        
+        .pipe(concat(bower.js.filename, {newLine: ";"}))
+            
         .pipe(gulpif((bower.uglify), uglify(bower.uglify)))
+        .pipe(gulpif(bower.sourcemaps, sourcemaps.write() )) // end sourcemaps
         .pipe(gulp.dest(bower.js.dest));
 
     // make css
