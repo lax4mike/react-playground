@@ -50,22 +50,24 @@ var numbers = [
 numbers[Symbol.iterator] = function(){
 
     // keep track of where we are, going backwards
-    var i = numbers.length - 1;
+    var i = numbers.length;
 
     return {
         next() {
 
+            // decrement i
+            i--;
             // if we're at the end, finish
             if (!numbers[i]){ 
                 return { done: true };
             }
 
             // skip if it's hidden
-            if (numbers[i].hidden){ i--; }
+            if (numbers[i].hidden){ return this.next(); }
 
-            // return this number and decrement it
+            // return this number
             return { 
-                value: numbers[i--].num, 
+                value: numbers[i].num, 
                 done:  false
             };
         }
