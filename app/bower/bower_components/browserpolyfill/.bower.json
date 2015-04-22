@@ -1,0 +1,7 @@
+{
+  "name": "browserpolyfill",
+  "main": "index.js",
+  "_source": "/Users/bryan/src/es6-playground/app/bower/browser-polyfill.js",
+  "_target": "*",
+  "_originalSource": "./browser-polyfill.js"
+}
