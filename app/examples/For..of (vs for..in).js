@@ -1,35 +1,26 @@
-// Iterators and For Of (vs. for in)
+// For Of (vs. for in)
 
-/** 
-== Iterator: Supported only on firefox ==
-* An Iterator is an object that knows how to access
-* items from a collection one at a time while keeping
-* the track of its current position within that sequence
-* In javascript an iterator provides a next() method which returns the next item in [key, value] format in the sequence
-* The next() method throws StopIteration if no more items in the sequence
-* https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators#Iterators
+/**
+= The for...of statement creates a loop Iterating over iterable objects, including Array, Map, Set, arguments object and so on.
+= for...of iterates over property values while for...in iterates over property names.
+= Goal is to write a code to show what get's returned from an array using for...of and for...in
 **/
 
-// Simple iterators for objects and arrays can be created using the Iterator() function
+let goals = ['js', 'angular', 'drupal'];
 
-// lets define a "fruit" object with "name" and "texture" properties
-var fruit = {name: "Banana", texture: "Gooey"}; 
-// lets create an iterator for the "fruit" object using Iterator() function
-var iterator = Iterator(fruit);
-// lets use next() method to access key-value pair from the "fruit" object
-console.log(iterator.next()); // key-value pair is ["name", "Banana"]
-console.log(iterator.next()); // key-value pair is ["texture", "Gooey"]
-//console.log(iterator.next()); // throws StopIteration
+
+// Using for...in
+for(let goal in goals) {
+	console.log("Goal: " + goal);
+}
+
+// Using for...of
+for(let goal of goals) {
+	console.log("Goal: " + goal);
+}
 
 /** 
-== StopIteration is Non-standard. Not part of any current standards document. ==
-* Basically, anything after StopIteration won't get executed
+== Future Stuff ==
+= For...of can be used to iterate over Generators, DOM Collections
+
 **/
-
-/** == ES5 == **/
-
-// Using forEach
-Object.keys(fruit).forEach(function (key) {
-	var value = fruit[key];
-	console.log(key,value);
-});
