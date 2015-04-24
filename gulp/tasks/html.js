@@ -66,6 +66,7 @@ function getExamples() {
 
         // remove spaces, / and replace with -, lowercase
         var slug =  displayName.replace(/[\s\/]/g, "-")
+                               .replace(/-+/g, "-")
                                .toLowerCase();
 
         // make sure we can put this in the URL
