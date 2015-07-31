@@ -8,6 +8,10 @@ module.exports = {
     // omit or set to false for static sites
     "hostname": "my-project.mlambert.velir.com",
 
+    // port that browsersync will run on
+    // http://www.browsersync.io/docs/options/#option-port
+    "browserSyncPort": 8080,
+
     // what gulp task to run when you type "gulp"
     "defaultTask": "dev"
 };

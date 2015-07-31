@@ -5,59 +5,69 @@ var gulp           = require("gulp"),
     filter         = require("gulp-filter"),
     gulpif         = require("gulp-if"),
     uglify         = require("gulp-uglify"),
+    rename         = require("gulp-rename"),
     minifyCSS      = require("gulp-minify-css"),
-    mainBowerFiles = require("main-bower-files"),
-    sourcemaps     = require("gulp-sourcemaps");
+    sourcemaps     = require("gulp-sourcemaps"),
+    source         = require("vinyl-source-stream"), 
+    gStreamify     = require("gulp-streamify"), // to fix uglify https://github.com/nfroidure/gulp-streamify
+    mainBowerFiles = require("main-bower-files");
 
 
-// dev/default settings
-var bower = {
-    root: config.root + "/bower/",
+var bowerRoot = config.root + "/bower";
 
-    js: {
-        filename: "vendor.js",
-        dest: config.dest + "/js"
-    },
+// bower settings
+utils.setTaskConfig("bower", {
     
-    css: {
-        filename: "vendor.css",
-        dest: config.dest + "/css",
+    default: {
+        root: bowerRoot,
+
+        js: {
+            filename: "vendor.js",
+            dest: config.dest + "/js"
+        },
+        
+        css: {
+            filename: "vendor.css",
+            dest: config.dest + "/css"
+        },
+
+        // to skip, set value to false or omit entirely
+        // otherwise, pass options object (can be empty {})
+        uglify: false,
+
+        // to skip, set value to false or omit entirely
+        // otherwise, pass options object (can be empty {})
+        minifyCSS: false,
+
+        browserify: {
+            debug: true // include sourcemaps
+        }
     },
 
-    // to skip, set value to false or omit entirely
-    // otherwise, pass options object (can be empty {})
-    uglify: false,
-
-    // to skip, set value to false or omit entirely
-    // otherwise, pass options object (can be empty {})
-    minifyCSS: false,
-
-    sourcemaps: true
-};
-
-// production settings
-if (config.env === "prod"){
-
-    // https://github.com/codemirror/CodeMirror/issues/2276
-    // http://blog.entelect.co.za/view/6435/minification-and-why-i-m-seeing-instead-of-whitespace
-    bower.uglify = {
-        output: { 
-            ascii_only: true 
+    prod: {
+        uglify: {},
+        minifyCSS: {},
+        browserify: {
+            debug: false // include sourcemaps
         }
-    };
-    bower.minifyCSS = {};
-    bower.sourcemaps = false;
-}
+    }
+});
+
+// watch bower.json to regenerate bundle
+utils.registerWatcher("bower", [
+    bowerRoot + "/bower.json"
+]);
 
 
-
-/* bundle up vendor libraries (from bower) */
+/* bundle up bower libraries */
 // http://engineroom.teamwork.com/hassle-free-third-party-dependencies/
 gulp.task("bower", function(next){
 
+    var bower = utils.loadTaskConfig("bower");
+
     if (!bower || !bower.root){
         utils.logYellow("bower", "not configured");
-        return;
+        next(); return;
     }
 
     // https://github.com/ck86/main-bower-files
@@ -69,23 +79,24 @@ gulp.task("bower", function(next){
     });
 
     if (bowerfiles.length === 0){
-        return;
+        next(); return;
     }
 
     // log the bower files to the gulp output
     utils.logYellow("bower files", "\n\t" + bowerfiles.join("\n\t"));
 
     // make js
-    var bowerJs = gulp.src(bowerfiles)
+    gulp.src(bowerfiles)
         .pipe(utils.drano())
         .pipe(filterByExtension("js"))
-        .pipe(gulpif(bower.sourcemaps,  sourcemaps.init() )) // init sourcemaps
-        
+        .pipe(sourcemaps.init())  // start sourcemaps
+
         // putting a ; between each file to avoid problems when a library doesn't end in ;        
         .pipe(concat(bower.js.filename, {newLine: ";"}))
-            
+
         .pipe(gulpif((bower.uglify), uglify(bower.uglify)))
-        .pipe(gulpif(bower.sourcemaps, sourcemaps.write() )) // end sourcemaps
+        .pipe(rename({ suffix: "-generated" }))
+        .pipe(sourcemaps.write("./")) // end sourcemaps
         .pipe(gulp.dest(bower.js.dest));
 
     // make css
@@ -94,6 +105,7 @@ gulp.task("bower", function(next){
         .pipe(filterByExtension("css"))
         .pipe(concat(bower.css.filename))
         .pipe(gulpif((bower.minifyCSS), minifyCSS(bower.minifyCSS)))
+        .pipe(rename({ suffix: "-generated" }))
         .pipe(gulp.dest(bower.css.dest));
 
 
@@ -101,17 +113,10 @@ gulp.task("bower", function(next){
 
 });
 
-// watch bower.json to regenerate vendor libraries
-if (config.watch){
-    var bowerJson = bower.root + "bower.json";
-    utils.logYellow("watching", "bower:", bowerJson);
-    gulp.watch(bowerJson, ["bower"]);
-}
-
-
 
 function filterByExtension(extension){  
     return filter(function(file){
         return file.path.match(new RegExp("." + extension + "$"));
     });
 }
+

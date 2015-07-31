@@ -9,23 +9,24 @@ var path = require("path"),
 
 
 // dev/default settings
-var html = {
-    watch: [
-        config.root + "/index.html",
-        config.root + "/examples/**"
-    ],
-    dest: config.dest
-};
+utils.setTaskConfig("html", {
+    default: {
+        dest: config.dest
+    }
+});
 
-// production settings
-if (config.env === "prod"){
-    // defaults
-}
+// register the watch
+utils.registerWatcher("html", [
+    config.root + "/index.html",
+    config.root + "/examples/**"
+]);
 
 
 
 /* copy html files */
 gulp.task("html", function(next) {
+
+    var html = utils.loadTaskConfig("html");
 
 
     // generate index.html with underscore templates
@@ -41,22 +42,13 @@ gulp.task("html", function(next) {
 });
 
 
-// watch html
-if (config.watch){
-    utils.logYellow("watching", "html:", html.watch);
-    gulp.watch(html.watch, ["html"]);
-}
-
-
-
-
 function getExamples() {
 
     var examplesDir = path.resolve(config.root + "/examples");
     var files = fs.readdirSync(examplesDir);
   
     // load file content of each file in examples
-    examples = files.map(function(file){
+    var examples = files.map(function(file){
         var filePath = examplesDir + '/' + file;
         var content = fs.readFileSync(filePath, "utf8");
 
