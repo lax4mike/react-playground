@@ -13,16 +13,22 @@
     "babel": "./babel-browser-4.7.16.js",
     "browserpolyfill": "./browser-polyfill.js",
     "svg4everybody": "https://github.com/jonathantneal/svg4everybody.git#~1.0.0",
-    "underscore": "~1.8.2"
+    "underscore": "~1.8.2",
+    "react": "~0.13.3",
+    "codemirror-jsx": "./codemirror-jsx.js"
   },
   "overrides": {
     "codemirror": {
       "main": [
         "lib/codemirror.js",
-        "mode/javascript/javascript.js",
         "lib/codemirror.css",
         "theme/eclipse.css"
       ]
+    },
+    "codemirror-jsx": {
+      "dependencies": {
+        "codemirror": "~5.0.0"
+      }
     },
     "svg4everybody": {
       "main": "svg4everybody.min.js"

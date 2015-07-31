@@ -14,11 +14,11 @@
 
         </script>
     </head>
-    <body>
+    <body class="hide-es5">
 
 
         <div class="header">
-            ES6 Playground
+            React Playground
             <select class="examples">
                 <option value=""> Examples </option>
                 <% examples.forEach(function(ex){ %>
@@ -32,12 +32,12 @@
                     <span>ES6</span>
                     </label>
                 <label class="toggle" title="Toggle ES5 panel">
-                    <input type="checkbox" class="toggle--es5" checked data-hide="es5">
+                    <input type="checkbox" class="toggle--es5" data-hide="es5">
                     <span>ES5</span>
                 </label>
                 <label class="toggle" title="Toggle console panel">
                     <input type="checkbox" class="toggle--console" checked data-hide="console">
-                    <span>Console</span>
+                    <span>Output</span>
                 </label>
             </div>
 
@@ -66,10 +66,10 @@
                 </div>
             </div>
 
-            <div class="console toggle-pane">
-                <div class="console__resize-handle"></div>
-                <div class="console__title-bar">Console</div>
-                <div class="console__text"></div>
+            <div class="output toggle-pane">
+                <div class="output__resize-handle"></div>
+                <div class="output__title-bar">React output</div>
+                <div class="output__html js-react-output"></div>
             </div>
         
         </main>

@@ -6,7 +6,7 @@ var Console = require("./console");
 // es6 code mirror
 var es6 = document.querySelector(".editor--es6 .editor__code-mirror");
 var es6CodeMirror = CodeMirror(es6, {
-    mode         : "javascript",
+    mode         : "jsx", // or javascript
     lineNumbers  : true,
     lineWrapping : true,
     theme        : "eclipse"
@@ -15,7 +15,7 @@ var es6CodeMirror = CodeMirror(es6, {
 // es6 code mirror
 var es5 = document.querySelector(".editor--es5 .editor__code-mirror");
 var es5CodeMirror = CodeMirror(es5, {
-    mode         : "javascript",
+    mode         : "jsx", // or javascript
     lineNumbers  : true,
     lineWrapping : true,
     theme        : "eclipse"

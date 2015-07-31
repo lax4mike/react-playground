@@ -1,3 +1,3 @@
-# es6-playground
+# react-playground
 
-http://mikelambert.me/es6/
+http://mikelambert.me/react/

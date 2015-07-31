@@ -1,4 +1,4 @@
-
+/*global $ */
 
 $(".toggle--es6").change(function(event){
     var checked = event.target.checked;
@@ -37,4 +37,5 @@ function updateToggle(toggle, checked){
     var hideSelector = toggle.attr("data-hide");
     $("body").toggleClass("hide-" + hideSelector, !checked);
 }
+
 

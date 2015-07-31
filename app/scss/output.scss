@@ -2,7 +2,7 @@
 @import url(http://fonts.googleapis.com/css?family=Source+Code+Pro);
 
 
-.console {
+.output {
     
     padding-left: 0.5rem;
 
@@ -12,7 +12,7 @@
     position: relative;
     box-sizing: border-box;
 
-    .console__title-bar {
+    .output__title-bar {
         flex: 0 0 auto;
         padding: 0.5rem 1rem;
         background: white;    
@@ -20,29 +20,22 @@
         border-bottom: 0;
     }
 
-    .console__text {
+    .output__html {
         position: relative;
         flex: 1 1 auto;
         padding: 1rem;
         background: white;
-        border: 1px solid $gray4;
-        font-family: "Source Code Pro", monospace;
+        border: 1px solid $gray4; 
         font-size: 16px;
         color: #666;
         overflow: auto;
 
-        .console__error,
-        .console__log {
-            border-bottom: 1px solid #eee;
-            padding: 0.5rem 0 0.1rem;
-        }
-
-        .console__error {
+        .output__error {
             color: red;
         }
     }
 
-    .console__resize-handle {
+    .output__resize-handle {
 
         cursor: ew-resize;
         user-select: none;
@@ -68,7 +61,7 @@
     }
 
 
-    .console__iframe {
+    .output__iframe {
         position: absolute;
         top: 0; left: 0; 
         height: 100%;
