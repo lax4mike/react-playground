@@ -5,6 +5,7 @@ var gulp        = require("gulp"),
     path        = require("path"),
     runSequence = require("run-sequence"),
     color       = require("cli-color"),
+    watch       = require("gulp-watch"),
     argv        = require("yargs").argv,
     merge       = require("deepmerge");
 
@@ -177,7 +178,12 @@ module.exports.build = function build() {
             // only watch this task if it's in our task list
             if (config.tasks.indexOf(watcher.task) !== -1) { 
                 this.logYellow("watching", watcher.task + ":", watcher.files);
-                gulp.watch(watcher.files, [watcher.task]);
+
+                // using gulp-watch instead of gulp.watch because gulp-watch will
+                // recognize when new files are added/deleted.
+                watch(watcher.files, function(){
+                    gulp.start([watcher.task]);
+                });
             }
         }.bind(this));
       
