@@ -18,9 +18,9 @@ $(".toggle--es5").change(function(event){
 });
 
 
-$(".toggle--console").change(function(event){
+$(".toggle--output").change(function(event){
     var checked = event.target.checked;
-    updateToggle($(".toggle--console"), checked);
+    updateToggle($(".toggle--output"), checked);
 });
 
 

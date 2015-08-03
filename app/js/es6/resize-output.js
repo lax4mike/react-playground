@@ -1,5 +1,5 @@
 
-var resizer = $(".console__resize-handle");
+var resizer = $(".output__resize-handle");
 
 // stream of true/false of whether or not the user has their mouse
 // down on the resize handle
@@ -34,7 +34,7 @@ var doubleClickStream = Kefir.fromEvent(resizer, "click")
 
     // on double click, reset code panels to 50% (should match initial css)
     .onValue(function(v){
-        $(".console").css("flexBasis", "25%");
+        $(".output").css("flexBasis", "25%");
         $(".code").css("flexBasis", "75%");
     });
 
@@ -44,7 +44,7 @@ var mouseMoveStream = Kefir.fromEvent($(document), "mousemove")
     // only push to this stream if the mouse is down on the resize handle
     .filterBy(mouseIsDownStream)
 
-    // get x position as a percentage (size of console)
+    // get x position as a percentage (size of output)
     .map(function(mouseEvent){
 
         // prevent user selecting while dragging
@@ -65,7 +65,7 @@ var mouseMoveStream = Kefir.fromEvent($(document), "mousemove")
     })
 
     .onValue(function(v){
-        $(".console").css("flexBasis", v + "%");
+        $(".output").css("flexBasis", v + "%");
         $(".code").css("flexBasis", (100 - v) + "%");
     });
 

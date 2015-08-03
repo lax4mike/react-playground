@@ -1,3 +1,3 @@
 gulp prod
-ssh oceanstar 'mkdir -p ~/www/es6'
-scp -r ../build_prod/* oceanstar:~/www/es6
+ssh oceanstar 'mkdir -p ~/www/react'
+scp -r ../build/* oceanstar:~/www/react

@@ -13,7 +13,6 @@
     "babel": "./babel-browser-4.7.16.js",
     "browserpolyfill": "./browser-polyfill.js",
     "svg4everybody": "https://github.com/jonathantneal/svg4everybody.git#~1.0.0",
-    "underscore": "~1.8.2",
     "react": "~0.13.3",
     "codemirror-jsx": "./codemirror-jsx.js"
   },

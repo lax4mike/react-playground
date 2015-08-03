@@ -1,8 +1,7 @@
-/*global React */
 let Hello = React.createClass({
     render: function() {
         return (
-            <div> Hello, JSX! </div>
+            <div className="greeting"> Hello, JSX! </div>
         );
     }
 });
