@@ -1,8 +1,14 @@
 let Counter = React.createClass({
 
+    getDefaultProps: function(){
+        return {
+            startNum: 0
+        }
+    },
+
     getInitialState: function(){
         return { 
-            count: this.props.startNum || 0 
+            count: this.props.startNum
         };
     },
 
