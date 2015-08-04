@@ -12,26 +12,33 @@
     position: relative;
     box-sizing: border-box;
 
-    .output__title-bar {
-        flex: 0 0 auto;
-        padding: 0.5rem 1rem;
-        background: white;    
-        border: 1px solid $gray4;
-        border-bottom: 0;
+    .output__react {
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-basis: auto;
     }
 
-    .output__html {
-        position: relative;
-        flex: 1 1 auto;
-        padding: 1rem;
-        background: white;
-        border: 1px solid $gray4; 
-        font-size: 16px;
-        color: #666;
-        overflow: auto;
+    .output__console {
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-basis: 772;
+        max-height: 30vh;
+        min-height: 30vh; // flex basis doesn't work here because the height of the parent isn't explicit
+        padding-top: 0.5rem;
+        opacity: 1;
 
-        .output__error {
-            color: red;
+        transition: all 250ms;
+
+        // remove css transitions to prevent conflict with resizer dragging
+        .is-resizing & {
+            transition: none;
+        }
+
+        .hide-console & {
+            max-height: 0 !important;
+            min-height: 0 !important;
+            padding: 0;
+            opacity: 0;
         }
     }
 
@@ -60,14 +67,80 @@
         }
     }
 
+}
 
-    .output__iframe {
-        position: absolute;
-        top: 0; left: 0; 
-        height: 100%;
-        width: 100%;
-        border: 0;
+
+.output__react,
+.output__console {
+
+    display: flex; 
+    flex-direction: column;
+    position: relative;
+
+    .output__title-bar {
+        flex: 0 0 auto;
+        padding: 0.5rem 1rem;
+        background: white;    
+        border: 1px solid $gray4;
+        border-bottom: 0;
     }
 
+    .output__html,
+    .console__text {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        flex: 1 1 auto;
+        padding: 1rem;
+        background: white;
+        border: 1px solid $gray4; 
+        font-size: 16px;
+        color: #666;
+        overflow: auto;
+    }
+
+    .console__resize-handle {
+
+        cursor: ns-resize;
+        user-select: none;
+
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        height: 0.5rem;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &::before {
+            display: block;
+            content: "";
+            background: rgba(0, 0, 0, 0.3);
+            width: 3rem;
+            height: 0.25rem;
+            border-radius: 0.2rem;
+        }
+    }
+
+
+    .console__error {
+        color: red;
+    }
 }
+
+.output__react .output__title-bar {
+    display: flex;
+ 
+    .text { 
+        flex: 1 0 auto; 
+    }
+
+    .toggle-group { 
+        flex: 0 1 auto; 
+    }
+}
+
+
 

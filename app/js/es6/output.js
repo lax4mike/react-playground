@@ -12,7 +12,7 @@ window.console.log = (function() {
 
         // write to our on screen console
         var argString = getArgString(Array.prototype.slice.call(arguments));
-        $(".console__text").append("<div  class='console__log'>" + argString + 
+        $(".js-console-output").append("<div  class='console__log'>" + argString + 
             "</div>");
     };
 }());
@@ -27,7 +27,7 @@ window.console.error = (function() {
 
         // write to our on screen console
         var argString = getArgString(Array.prototype.slice.call(arguments));
-        $(".console__text").append("<div class='console__error'>" + argString + 
+        $(".js-console-output").append("<div class='console__error'>" + argString + 
             "</div>");
     };
 }());
@@ -55,10 +55,11 @@ function getArgString(args) {
 module.exports = {
 
     clear: function(){
-        $(".console__text").empty();
+        $(".js-console-output").empty();
+        $(".js-react-output").empty();
     },
 
-    updateConsole: function updateConsole(code){
+    updateOutput: function updateOutput(code){
         try {
             this.clear();
             babel.run(code);

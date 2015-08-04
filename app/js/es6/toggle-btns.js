@@ -24,6 +24,12 @@ $(".toggle--output").change(function(event){
 });
 
 
+$(".toggle--console").change(function(event){
+    var checked = event.target.checked;
+    updateToggle($(".toggle--console"), checked);
+});
+
+
 function updateToggle(toggle, checked){
 
     // force the checkbox to be the value

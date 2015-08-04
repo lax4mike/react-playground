@@ -1,12 +1,12 @@
 // handle es6 -> es5 compilation
 
-var Console = require("./console");
+var Output = require("./output.js");
 
 
 // es6 code mirror
 var es6 = document.querySelector(".editor--es6 .editor__code-mirror");
 var es6CodeMirror = CodeMirror(es6, {
-    mode         : "jsx", // or javascript
+    mode         : "htmlmixed", // or javascript
     lineNumbers  : true,
     lineWrapping : true,
     theme        : "eclipse"
@@ -15,7 +15,7 @@ var es6CodeMirror = CodeMirror(es6, {
 // es6 code mirror
 var es5 = document.querySelector(".editor--es5 .editor__code-mirror");
 var es5CodeMirror = CodeMirror(es5, {
-    mode         : "jsx", // or javascript
+    mode         : "javascript", // or javascript
     lineNumbers  : true,
     lineWrapping : true,
     theme        : "eclipse"
@@ -39,7 +39,7 @@ var es6Stream = Kefir.fromEvent(es6CodeMirror, "change")
     // compile the es6 code to es5
     .map(getCompiled)
 
-    // when it changes, update the es5 code mirror and console
+    // when it changes, update the es5 code mirror and output/console
     .onValue(runCode);
 
 
@@ -47,7 +47,7 @@ var es6Stream = Kefir.fromEvent(es6CodeMirror, "change")
 var refreshStream = Kefir.fromEvent($(".btn--rerun"), "click")
 
     // first clear the console
-    .onValue(Console.clear)
+    .onValue(function(){ Output.clear() })
 
     // get the compiled code
     .map(getCompiled)
@@ -73,7 +73,7 @@ function getCompiled(){
 // take compiled code and update the es5 panel and console
 function runCode(compiledCode){
     es5CodeMirror.setValue(compiledCode);
-    Console.updateConsole(es6CodeMirror.getValue());
+    Output.updateOutput(es6CodeMirror.getValue());
 }
 
 

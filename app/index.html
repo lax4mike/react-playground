@@ -47,6 +47,15 @@
                 </svg>
             </button>
 
+            <div style="flex-grow: 1; flex-shrink: 1; flex-basis: 0"></div>
+
+            <div class="toggle-group toggle-console-group">
+                <label class="toggle" title="Toggle console panel">
+                    <input type="checkbox" class="toggle--console" checked data-hide="console">
+                    <span>Console</span>
+                </label>
+            </div>
+
         </div>
 
         <main>
@@ -67,9 +76,17 @@
             </div>
 
             <div class="output toggle-pane">
-                <div class="output__resize-handle"></div>
-                <div class="output__title-bar">React output</div>
-                <div class="output__html js-react-output"></div>
+                <div class="output__resize-handle js-output-resize-handle"></div>
+                <div class="output__react">
+                    <div class="output__title-bar">React output</div>
+                    <div class="output__html js-react-output"></div>
+                </div>
+                <div class="output__console console">
+                    <div class="console__resize-handle js-console-resize-handle"></div>
+                    <div class="output__title-bar">console</div>
+                    <div class="console__text js-console-output"></div>
+                </div>
+
             </div>
         
         </main>

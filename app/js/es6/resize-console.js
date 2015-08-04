@@ -1,5 +1,5 @@
 
-var resizer = $(".js-output-resize-handle");
+var resizer = $(".js-console-resize-handle");
 
 // stream of true/false of whether or not the user has their mouse
 // down on the resize handle
@@ -34,8 +34,8 @@ var doubleClickStream = Kefir.fromEvent(resizer, "click")
 
     // on double click, reset code panels to 50% (should match initial css)
     .onValue(function(v){
-        $(".output").css("flexBasis", "25%");
-        $(".code").css("flexBasis", "75%");
+        $(".output__console").css("maxHeight", "30vh");
+        $(".output__console").css("minHeight", "30vh");
     });
 
 
@@ -50,23 +50,23 @@ var mouseMoveStream = Kefir.fromEvent($(document), "mousemove")
         // prevent user selecting while dragging
         mouseEvent.preventDefault();
 
-        var rw = resizer.width();
-        var mainWidth  = $("main").width();
-        var mainLeft   = $("main").offset().left + (($("main").outerWidth() - $("main").width())/2);
-        var mainMouseX = mouseEvent.pageX - mainLeft - (rw/2); // rw/2 puts us in the middle of the resizer
+        var rh = resizer.height();
+        var outputHeight  = $(".output").height();
+        var outputTop   = $(".output").offset().top + (($(".output").outerHeight() - $(".output").height())/2);
+        var mainMouseY = mouseEvent.pageY - outputTop + (rh/2); // rw/2 puts us in the middle of the resizer
 
-        // calculate percentage of width. 
-        return 100 - ((mainMouseX/mainWidth) * 100);
+        return outputHeight - mainMouseY;
     })
 
     // don't let it get too small or too big
-    .filter(function(percent){
-        return percent > 10 && percent < 70;
+    .filter(function(px){
+        var outputHeight  = $(".output").height();
+        return px > 100 && px < outputHeight*3/4;
     })
 
     .onValue(function(v){
-        $(".output").css("flexBasis", v + "%");
-        $(".code").css("flexBasis", (100 - v) + "%");
+        $(".output__console").css("maxHeight", v);
+        $(".output__console").css("minHeight", v);
     });
 
 
