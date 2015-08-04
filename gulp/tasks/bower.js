@@ -55,7 +55,8 @@ utils.setTaskConfig("bower", {
 
 // watch bower.json to regenerate bundle
 utils.registerWatcher("bower", [
-    bowerRoot + "/bower.json"
+    bowerRoot + "/bower.json",
+    bowerRoot + "/bower_components/codemirror/**/*"
 ]);
 
 

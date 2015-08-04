@@ -130,6 +130,13 @@
     }
 }
 
+.console {
+    .console__text {
+        font-family: monospace;
+        white-space: pre;
+    }
+}
+
 .output__react .output__title-bar {
     display: flex;
  

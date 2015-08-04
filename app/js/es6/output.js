@@ -51,6 +51,21 @@ function getArgString(args) {
     }
 }
 
+var entityMap = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': '&quot;',
+    "'": '&#39;',
+    "/": '&#x2F;'
+};
+
+function escapeHtml(string) {
+    return String(string).replace(/[&<>"'\/]/g, function (s) {
+        return entityMap[s];
+    });
+}
+
 
 module.exports = {
 
@@ -65,7 +80,7 @@ module.exports = {
             babel.run(code);
         }
         catch(e){
-            console.error(e.stack);
+            console.error(escapeHtml(e.stack));
         }
     }
 };
