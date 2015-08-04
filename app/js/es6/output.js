@@ -55,9 +55,9 @@ var entityMap = {
     "&": "&amp;",
     "<": "&lt;",
     ">": "&gt;",
-    '"': '&quot;',
-    "'": '&#39;',
-    "/": '&#x2F;'
+    '"': "&quot;",
+    "'": "&#39;",
+    "/": "&#x2F;"
 };
 
 function escapeHtml(string) {
@@ -80,6 +80,7 @@ module.exports = {
             babel.run(code);
         }
         catch(e){
+            $(".toggle--console").prop("checked", true).change(); // show console if there is an error
             console.error(escapeHtml(e.stack));
         }
     }
