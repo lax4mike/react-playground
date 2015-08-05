@@ -6,7 +6,7 @@ let Counter = React.createClass({
         };
     },
 
-    handleClick: function(){
+    incrementCount: function(){
         this.setState({ 
             count: this.state.count + 1 
         });
@@ -16,7 +16,7 @@ let Counter = React.createClass({
         return (
             <div>
                 <div className="count">{this.state.count}</div>
-                <button onClick={this.handleClick}>+1</button>
+                <button onClick={this.incrementCount}>+1</button>
             </div>
         );
     }

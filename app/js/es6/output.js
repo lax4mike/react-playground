@@ -39,7 +39,6 @@ function getArgString(args) {
         // if an arg is an object, print out the JSON instead of [object Object]
         return args.map(function(arg){
             
-            if (typeof arg === "null")      { return "null"; }
             if (typeof arg === "undefined") { return "undefined"; }
             if (typeof arg === "object")    { return JSON.stringify(arg, null, 1) }
 
@@ -70,6 +69,14 @@ function escapeHtml(string) {
 module.exports = {
 
     clear: function(){
+
+        // clear any intervals 
+        // Get a reference to the last interval +1
+        var lastIntervalId = window.setInterval(() => {}, 9999); 
+        for (var i = 1; i < lastIntervalId; i++){
+            window.clearInterval(i);
+        }
+ 
         $(".js-console-output").empty();
         $(".js-react-output").empty();
     },

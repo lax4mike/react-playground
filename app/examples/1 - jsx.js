@@ -1,7 +1,9 @@
 let Hello = React.createClass({
     render: function() {
         return (
-            <div className="greeting"> Hello, JSX! </div>
+            <div className="greeting"> 
+                Hello, JSX! 
+            </div>
         );
     }
 });
