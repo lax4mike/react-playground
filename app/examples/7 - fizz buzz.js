@@ -33,7 +33,7 @@ let Timer = React.createClass({
         if (count % 3 === 0){ text += "Fizz "; }
         if (count % 5 === 0){ text += "Buzz "; }
 
-        text = (text === "") ? count : `(${count}) ${text}`;
+        text = (text === "") ? count : <span>{count} &ndash; {text}</span>;
 
         return (
             <div className="count">{text}</div>
