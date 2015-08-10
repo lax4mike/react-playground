@@ -1,12 +1,14 @@
 let Hello = React.createClass({
-
+    
     getDefaultProps: function(){
         return { name: "World" };
     },
 
     render: function(){
         return (
-            <div className="greeting">Hello {this.props.name}!</div>
+            <div className="greeting">
+                Hello {this.props.name}!
+            </div>
         );
     }
 });

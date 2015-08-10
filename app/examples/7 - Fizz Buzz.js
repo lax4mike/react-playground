@@ -1,9 +1,13 @@
 let Timer = React.createClass({
 
+    propTypes: {
+        startNum: React.PropTypes.number
+    },
+    
     getDefaultProps: function(){
         return {
             startNum: 0
-        }
+        };
     },
 
     getInitialState: function(){
@@ -13,8 +17,8 @@ let Timer = React.createClass({
     },
 
     componentDidMount: function(){
-        
-        var timerID = setInterval(() => {
+
+        setInterval(() => {
             this.setState({ 
                 count: this.state.count + 1 
             });
@@ -32,9 +36,7 @@ let Timer = React.createClass({
         text = (text === "") ? count : `(${count}) ${text}`;
 
         return (
-            <div>
-                <div className="count">{text}</div>
-            </div>
+            <div className="count">{text}</div>
         );
     }
 
