@@ -6,9 +6,9 @@ var Output = require("./output.js");
 // es6 code mirror
 var es6 = document.querySelector(".editor--es6 .editor__code-mirror");
 var es6CodeMirror = CodeMirror(es6, {
-    mode         : "htmlmixed", // or javascript
+    mode         : "jsx", // or javascript
     lineNumbers  : true,
-    lineWrapping : true,
+    lineWrapping : true, 
     theme        : "eclipse"
 });
 

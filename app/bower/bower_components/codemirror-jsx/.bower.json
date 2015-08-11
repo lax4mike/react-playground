@@ -1,7 +1,7 @@
 {
   "name": "codemirror-jsx",
   "main": "index.js",
-  "_source": "/Users/velir/www/react-playground/app/bower/codemirror-jsx.js",
+  "_source": "/www/react-playground/app/bower/codemirror-jsx.js",
   "_target": "*",
   "_originalSource": "./codemirror-jsx.js",
   "_direct": true

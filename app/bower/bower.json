@@ -1,11 +1,11 @@
-{ 
+{
   "name": "es6-playground",
   "private": true,
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components"
-  ], 
+  ],
   "dependencies": {
     "codemirror": "~5.0.0",
     "kefir": "~1.1.0",
@@ -24,7 +24,6 @@
         "mode/xml/xml.js",
         "mode/css/css.js",
         "mode/htmlmixed/htmlmixed.js",
-
         "lib/codemirror.css",
         "theme/eclipse.css"
       ]
