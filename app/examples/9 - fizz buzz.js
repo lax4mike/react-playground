@@ -36,7 +36,14 @@ let Timer = React.createClass({
     text = (text === "") ? count : <span>{count} &ndash; {text}</span>;
 
     return (
-      <div className="count">{text}</div>
+      <div>
+        <div className="count">{text}</div>
+        <p>
+          Type something in the input. Notice that it doesn't get cleared 
+          even though react is updating the fizz buzz count every second.
+        </p>
+        <input type="text" />
+      </div>
     );
   }
 
