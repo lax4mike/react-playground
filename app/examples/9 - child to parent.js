@@ -31,13 +31,11 @@ let NamePicker = React.createClass({
   
   propTypes: {
     names: React.PropTypes.array.isRequired,
-    onNameChange: React.PropTypes.func
+    onNameChange: React.PropTypes.func.isRequired
   },
 
   onNameChange: function(event){
-    if (typeof(this.props.onNameChange) === "function"){
-      this.props.onNameChange(event.target.value);
-    }
+    this.props.onNameChange(event.target.value);
   },
 
   render: function(){
