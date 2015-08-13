@@ -1,7 +1,7 @@
 let Hello = React.createClass({
 
   getNames: function(){
-    return ["Batman", "Robin", "Joker"]; 
+    return ["Batman", "Robin", "Alfred", "Joker", "Penguin"]; 
   },
 
   render: function() {

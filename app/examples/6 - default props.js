@@ -18,8 +18,8 @@ let App = React.createClass({
   render: function() {
     return (
       <div> 
-        <h3> Default Props in React </h3>
-        <Hello name="Mike" />
+        <h3> Props in React </h3>
+        <Hello name="Lonestar" />
         <Hello />
       </div>
     );

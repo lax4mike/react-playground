@@ -5,7 +5,7 @@ let Hello = React.createClass({
   },
 
   getNames: function(){
-    return ["Batman", "Robin", "Alfred", "Joker", "Penguin"]; 
+    return ["Gillgan", "Skipper, too", "A millionaire", "his wife", "A movie star", "Professor", "Mary Ann"]; 
   },
 
   handleNameChange: function(name){

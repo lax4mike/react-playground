@@ -14,7 +14,7 @@ let App = React.createClass({
     return (
       <div> 
         <h3> Props in React </h3>
-        <Hello name="Mike" />
+        <Hello name="Apu" />
         <Hello />
       </div>
     );
