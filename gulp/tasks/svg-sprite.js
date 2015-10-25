@@ -7,7 +7,7 @@ var gulp           = require("gulp"),
     rename         = require("gulp-rename"),
     gulpif         = require("gulp-if");
 
-/** 
+/**
  * Usage: put svg's in svg.src directory.  eg. /img/svg-sprite/my-icon.svg
  *        They will be compiled into svg.filename. eg. /img/svg-sprite.svg
  *
@@ -17,7 +17,7 @@ var gulp           = require("gulp"),
  */
 
 
-// svg settings 
+// svg settings
 utils.setTaskConfig("svg", {
     default: {
         src   : config.root + "/img/svg-sprite/**/*.svg",
@@ -52,15 +52,12 @@ gulp.task("svg-sprite", function(){
         .pipe(svgstore({
             inlineSvg: false
         }))
-    
+
         // HACK * https://github.com/FWeinb/grunt-svgstore/issues/77
         // gulp-replace to include xmlns:xlink="http://www.w3.org/1999/xlink
-        .pipe(replace(/xmlns/, 'xmlns:xlink="http://www.w3.org/1999/xlink" xmlns'))
-    
+        // .pipe(replace(/xmlns/, 'xmlns:xlink="http://www.w3.org/1999/xlink" xmlns'))
+
         .pipe(rename(svg.filename))
         .pipe(gulp.dest(svg.dest));
 
 });
-
-
-

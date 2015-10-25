@@ -1,20 +1,19 @@
 // handle es6 -> es5 compilation
 
-var Output = require("./output.js");
-
+import Output from "./output.js";
 
 // es6 code mirror
-var es6 = document.querySelector(".editor--es6 .editor__code-mirror");
-var es6CodeMirror = CodeMirror(es6, {
+let es6 = document.querySelector(".editor--es6 .editor__code-mirror");
+let es6CodeMirror = CodeMirror(es6, {
     mode         : "jsx", // or javascript
     lineNumbers  : true,
-    lineWrapping : true, 
+    lineWrapping : true,
     theme        : "eclipse"
 });
 
 // es6 code mirror
-var es5 = document.querySelector(".editor--es5 .editor__code-mirror");
-var es5CodeMirror = CodeMirror(es5, {
+let es5 = document.querySelector(".editor--es5 .editor__code-mirror");
+let es5CodeMirror = CodeMirror(es5, {
     mode         : "javascript", // or javascript
     lineNumbers  : true,
     lineWrapping : true,
@@ -31,20 +30,22 @@ var es5CodeMirror = CodeMirror(es5, {
 
 
 // observe change stream on es6codemirror
-var es6Stream = Kefir.fromEvent(es6CodeMirror, "change")
-
+let es6Stream = Kefir.fromEvent(es6CodeMirror, "change")
     // only do this if there is a 250ms gap
     .debounce(250)
+    // get the code from the codemirror
+    .map((codeMirror) => codeMirror.getValue());
 
+es6Stream
     // compile the es6 code to es5
     .map(getCompiled)
-
     // when it changes, update the es5 code mirror and output/console
     .onValue(runCode);
 
 
+
 // handle refreshing the console (useful for console statements over time)
-var refreshStream = Kefir.fromEvent($(".btn--rerun"), "click")
+let refreshStream = Kefir.fromEvent($(".btn--rerun"), "click")
 
     // first clear the console
     .onValue(function(){ Output.clear() })
@@ -60,11 +61,11 @@ var refreshStream = Kefir.fromEvent($(".btn--rerun"), "click")
 
 
 // snag the code from the es6 panel and get es5 code or error
-function getCompiled(){
+function getCompiled(es6Code){
     try {
-        var compiled = babel.transform(es6CodeMirror.getValue()).code;
+        let compiled = babel.transform(es6Code).code;
         return compiled;
-    } 
+    }
     catch(e){
         return e.toString();
     }
@@ -77,15 +78,13 @@ function runCode(compiledCode){
 }
 
 
-
 // handle select change
-var select = $(".examples");
+let select = $(".examples");
 
-var exampleStream = Kefir.fromEvent(select, "change")
+let exampleStream = Kefir.fromEvent(select, "change")
 
-    .map(function(event){
-        return event.target.value;
-    })
+    // get the value of the selcted option (filename)
+    .map((event) => event.target.value)
 
     .onValue(function(slug){
 
@@ -97,27 +96,89 @@ var exampleStream = Kefir.fromEvent(select, "change")
         }
 
         // find the selected file
-        var file = window.es6Examples.find(function(ex){
-            return ex.slug == slug;
-        });
+        let file = window.es6Examples.find((ex) => ex.slug == slug);
 
         // set the es6 code to be the file contents
         if (file){
             es6CodeMirror.setValue(file.content);
-    
+
             // set the hash
             window.location.hash = "#" + slug;
         }
 
     });
 
+// stream of t/f of whether or not we can update the hash when the
+// es6stream changes.  This is for when the user selects an example from
+// the example dropdown, we want to keep the example name in the url hash
+// but when they start typing, we want the encrypted code in the url hash
+let isAllowedToEncryptCodeIntoHash = Kefir.merge([es6Stream, exampleStream])
 
-// if there is a hash present, load the example
-var hash = window.location.hash.replace(/^#/, '');
+    // check the last two values.  This is because when the exampleStream
+    // fires, it updates the es6 code which fires that stream.
+    .slidingWindow(2, 2)
+
+    .map((values) => {
+
+        // each value is either the name of the example, or the text that
+        // is inisde the es6 editor.  If we recognize it as a filename,
+        // return true
+        let areFiles = values.map((value) => {
+            let file = window.es6Examples.find((ex) => ex.slug == value);
+
+            return (typeof(file) !== "undefined");
+        });
+
+        // if either of the last two values are true, return false
+        // meaning, if the user changed the example dropdown in the
+        // last two events, we're not allowed to update the hash with
+        // the DEFLATE hash
+        return !areFiles.some((v) => v);
+    })
+
+    .skipDuplicates();
+
+
+// update the hash with DEFLATE, if we're allowed
+es6Stream
+    .filterBy(isAllowedToEncryptCodeIntoHash)
+    .onValue(encryptCodeIntoHash);
+
+
+// https://github.com/jbt/markdown-editor
+// using the DEFLATE algorithm
+function encryptCodeIntoHash(es6Code){
+
+    window.location.hash = btoa( // base64 so url-safe
+        RawDeflate.deflate( // gzip
+            unescape(encodeURIComponent( // convert to utf8
+                es6Code
+            ))
+        )
+    );
+}
+
+// on page load, if there is a hash present, load the example
+let hash = window.location.hash.replace(/^#/, '');
 
 if (hash){
-    select.val(hash);
-    select.change();
-}
-    
+    let file = window.es6Examples.find((ex) => ex.slug == hash);
 
+    // if the hash is a file, select it and trigger change
+    if (file){
+        select.val(hash);
+        select.change();
+    }
+    // otherwise, it's the encrypted code, inflate and update the editor
+    else {
+        es6CodeMirror.setValue(
+            decodeURIComponent(escape(
+                RawDeflate.inflate(
+                    atob(
+                        hash
+                    )
+                )
+            ))
+        )
+    }
+}

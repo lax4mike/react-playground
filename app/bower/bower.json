@@ -14,7 +14,8 @@
     "browserpolyfill": "./browser-polyfill.js",
     "svg4everybody": "https://github.com/jonathantneal/svg4everybody.git#~1.0.0",
     "react": "~0.13.3",
-    "codemirror-jsx": "./codemirror-jsx.js"
+    "codemirror-jsx": "./codemirror-jsx.js",
+    "js-deflate": "https://github.com/dankogai/js-deflate.git"
   },
   "overrides": {
     "codemirror": {
@@ -35,6 +36,9 @@
     },
     "svg4everybody": {
       "main": "svg4everybody.min.js"
+    },
+    "js-deflate": {
+        "main": ["rawdeflate.js", "rawinflate.js"]
     }
   }
 }

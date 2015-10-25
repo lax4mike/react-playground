@@ -1,0 +1,14 @@
+{
+  "name": "js-deflate",
+  "homepage": "https://github.com/dankogai/js-deflate",
+  "_release": "7a307dbc90",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "7a307dbc9047685c224d964770f4e0b9ec241ab0"
+  },
+  "_source": "https://github.com/dankogai/js-deflate.git",
+  "_target": "*",
+  "_originalSource": "https://github.com/dankogai/js-deflate.git",
+  "_direct": true
+}
